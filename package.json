@@ -1,0 +1,13 @@
+{
+  "name": "flare-up",
+  "version": "1.0.0",
+  "description": "The tinyMachine Learning library hoping to grow up and change the world one day.",
+  "main": "flareUp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Eduardo J. Velasco",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}
