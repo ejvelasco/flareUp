@@ -1,55 +1,54 @@
 const flareUp = require('./flareUp');
 
-const info_gain = (labels) => {
-	const p = labels.filter(label => label).length;
-	const n = labels.filter(label => !label).length;
-	const p_prop = p/(p+n);
-	const n_prop = n/(p+n);
-	if (p_prop === 0) {
-		return n_prop*Math.log2(n_prop);
+function entropy(labels) {
+	const P = labels.filter(label => label).length;
+	const N = labels.filter(label => !label).length;
+	const P_PROP = P/(P+N);
+	const N_PROP = N/(P+N);
+	if (P_PROP === 0) {
+		return N_PROP*Math.log2(N_PROP);
 	}
-	if (n_prop === 0) {
-		return -p_prop*Math.log2(p_prop);
+	if (N_PROP === 0) {
+		return -P_PROP*Math.log2(P_PROP);
 	}
-	return -p_prop*Math.log2(p_prop)-n_prop*Math.log2(n_prop);
+	return -P_PROP*Math.log2(P_PROP)-N_PROP*Math.log2(N_PROP);
 };
-const choose_attrib = (attribs, examples) => {
-	const labels = flareUp.columns(examples.slice(0, examples.length), examples[0].length - 1, examples[0].length);
+function chooseAttrib(attribs, examples, labels) {
 	const gains = [];
+	const P = labels.filter(label => label).length;
+	const N = labels.filter(label => !label).length; 
 	attribs.forEach((attrib, i) => {
 		const subsets = {};
 		const vals = flareUp.columns(examples, i, i+1);
 		vals.forEach((val, j) => {
-			const val_safe = val.toString();
-			if (subsets[val_safe]) {
-				subsets[val_safe].push(labels[j]);
+			const valSafe = val.toString();
+			if (subsets[valSafe]) {
+				subsets[valSafe].push(labels[j]);
 			} else {
-				subsets[val_safe] = [labels[j]];
+				subsets[valSafe] = [labels[j]];
 			}
 		});
 		let remainder = 0;
 		Object.keys(subsets).forEach((subset) => {
-			const p = labels.filter(label => label).length;
-			const n = labels.filter(label => !label).length;
-			const p_i = subsets[subset].filter(label => label).length;
-			const n_i = subsets[subset].filter(label => !label).length;
-			remainder += ((p_i+n_i)/(p+n))*info_gain(subsets[subset]);
+			const P_i = subsets[subset].filter(label => label).length;
+			const N_i = subsets[subset].filter(label => !label).length;
+			remainder += ((P_i+N_i)/(P+N))*entropy(subsets[subset]);
 		});
 		const gain = {
-			gain: (info_gain(labels) - remainder).toFixed(3),
 			attrib, 
+			gain: (entropy(labels) - remainder).toFixed(3),
 		};
 		gains.push(gain);
 	});
 	gains.sort((a, b) => b.gain - a.gain);
-	return gains[0].attrib;
+	return gains[0]['attrib'];
 };
 const decision_tree_learning = (attribs, examples, default_val) => {
 	if (!examples || !examples.length) return default_val;
 	const labels = flareUp.columns(examples.slice(0, examples.length), examples[0].length - 1, examples[0].length);
 	if (!attribs || !attribs.length) return flareUp.mode(labels);
 	if (new Set(labels).size === 1) return labels[0];
-	const best = choose_attrib(attribs, examples);
+	const best = chooseAttrib(attribs, examples, labels);
 	const tree = {
 		label: best,
 	};
