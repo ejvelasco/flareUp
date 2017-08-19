@@ -1,8 +1,22 @@
 const flareUp = require('./flareUp');
-
-const decision_tree_learning = (attribs, examples, default_val) => {
-	if (!examples || !examples.length) return default_val;
-	const labels = flareUp.columns(examples.slice(0, examples.length), examples[0].length - 1, examples[0].length);
+class DecisionTreeClassifier {
+	constructor() {
+		this.tree = null;
+	}
+	fit(data) {
+		//build tree
+		this.tree = decision_tree_learning(attribs, examples, defaultVal); 
+		//set this.tree
+	}
+	predict() {
+		//traverse this.tree & predict result
+	}
+}
+const decision_tree_learning = (attribs, examples, defaultVal) => {
+	const N = examples.length;
+	const M = examples[0].length;
+	if (!examples || !N) return defaultVal;
+	const labels = flareUp.columns(examples.slice(0, N), M - 1, M);
 	if (!attribs || !attribs.length) return flareUp.mode(labels);
 	if (new Set(labels).size === 1) return labels[0];
 	const best = chooseAttrib(attribs, examples, labels);
