@@ -1,20 +1,15 @@
 /*
-	* The tiny Machine Learning library hoping to grow up and change the world one day.
+	* The tiny Machine Learning library hoping to grow up and change the world.
 	* @license
 	* Copyright Eduardo J. Velasco MAIN_CONTRIBUTOR_URL
 	* Released under MIT license LICENSE_URL
 */
-const range = require('./range');
-const mode = require('./mode');
-const rows = require('./rows');
-const columns = require('./columns');
-
+const modules = ['range', 'mode', 'rows', 'columns'];
 const VERSION = '1.0.0';
-const flareUp = {
-	range,
-	rows,
-	mode,
-	columns
-};
+const flareUp = {};
+
+modules.forEach((module) => {
+	flareUp[module] = require('./'+module);
+});
 
 module.exports = flareUp;

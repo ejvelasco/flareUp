@@ -1,7 +1,7 @@
 {
   "name": "flare-up",
   "version": "1.0.0",
-  "description": "The tinyMachine Learning library hoping to grow up and change the world one day.",
+  "description": "The tiny Machine Learning library hoping to grow up and change the world.",
   "main": "flareUp.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

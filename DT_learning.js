@@ -13,14 +13,6 @@ const info_gain = (labels) => {
 	}
 	return -p_prop*Math.log2(p_prop)-n_prop*Math.log2(n_prop);
 };
-const majority_val = (examples) => {
-	const labels = flareUp.columns(examples.slice(0, examples.length), examples[0].length - 1, examples[0].length);
-	return flareUp.mode(labels);	
-};
-const have_same_class = (examples) => {
-	const labels = flareUp.columns(examples.slice(0, examples.length), examples[0].length - 1, examples[0].length);
-	return [new Set(labels).size === 1, labels[0]];
-};
 const choose_attrib = (attribs, examples) => {
 	const labels = flareUp.columns(examples.slice(0, examples.length), examples[0].length - 1, examples[0].length);
 	const gains = [];
@@ -54,14 +46,14 @@ const choose_attrib = (attribs, examples) => {
 };
 const decision_tree_learning = (attribs, examples, default_val) => {
 	if (!examples || !examples.length) return default_val;
-	if (!attribs || !attribs.length) return majority_val(examples);
-	const same_class = have_same_class(examples); 
-	if (same_class[0]) return same_class[1];
+	const labels = flareUp.columns(examples.slice(0, examples.length), examples[0].length - 1, examples[0].length);
+	if (!attribs || !attribs.length) return flareUp.mode(labels);
+	if (new Set(labels).size === 1) return labels[0];
 	const best = choose_attrib(attribs, examples);
 	const tree = {
 		label: best,
 	};
-	const m = majority_val(examples);
+	const m = flareUp.mode(labels);
 	const i = attribs_o.indexOf(best);
 	const best_vals = flareUp.columns(examples_o, i, i+1);
 	const best_vals_unique = new Set(best_vals);
