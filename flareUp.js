@@ -4,7 +4,7 @@
 	* Copyright Eduardo J. Velasco MAIN_CONTRIBUTOR_URL
 	* Released under MIT license LICENSE_URL
 */
-const modules = ['range', 'mode', 'rows', 'columns'];
+const modules = ['range', 'mode', 'rows', 'columns', 'entropy'];
 const VERSION = '1.0.0';
 const flareUp = {};
 

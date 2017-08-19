@@ -4,7 +4,7 @@
 	* @member of flareUp
 	* @since 1.0.0
 	*
-	* @param {Array} Array to be analyzed.
+	* @param {Array} [a] Array to be analyzed.
 	*
  	* @returns {number} entropy of array.
 	*

@@ -4,9 +4,9 @@
 	* @member of flareUp
 	* @since 1.0.0
 	*
-	* @param {Array} 2D Array 
-	* @param {number} start of columns to select, inclusive.
-	* @param {number} end of columns to select, exclusive.
+	* @param {Array} [a] 2D Array 
+	* @param {number} [start] start of columns to select, inclusive.
+	* @param {number} [end] end of columns to select, exclusive.
 	*
  	* @returns {Array} columns selected.
 	*
