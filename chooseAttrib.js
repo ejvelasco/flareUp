@@ -29,13 +29,16 @@
 	*
 	* chooseAttrib(a, 1, 2); // => [2, 3, 4]
 */
+const columns = require('./columns');
+const entropy = require('./entropy');
+
 function chooseAttrib(attribs, examples, labels) {
 	const gains = [];
 	const P = labels.filter(label => label).length;
 	const N = labels.filter(label => !label).length; 
 	attribs.forEach((attrib, i) => {
 		const subsets = {};
-		const vals = flareUp.columns(examples, i, i+1);
+		const vals = columns(examples, i, i+1);
 		vals.forEach((val, j) => {
 			const valSafe = val.toString();
 			if (subsets[valSafe]) {
@@ -48,11 +51,11 @@ function chooseAttrib(attribs, examples, labels) {
 		Object.keys(subsets).forEach((subset) => {
 			const P_i = subsets[subset].filter(label => label).length;
 			const N_i = subsets[subset].filter(label => !label).length;
-			remainder += ((P_i+N_i)/(P+N))*flareUp.entropy(subsets[subset]);
+			remainder += ((P_i+N_i)/(P+N))*entropy(subsets[subset]);
 		});
 		const gain = {
 			attrib, 
-			gain: (flareUp.entropy(labels) - remainder).toFixed(3),
+			gain: (entropy(labels) - remainder).toFixed(3),
 		};
 		gains.push(gain);
 	});
