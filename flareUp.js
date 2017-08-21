@@ -5,7 +5,7 @@
 	* Released under MIT license LICENSE_URL
 */
 const modules = ['range', 'mode', 'rows', 'columns', 'entropy'];
-const classifiers = ['DecisionTree'];
+const classifiers = ['ID3Classifier'];
 const VERSION = '1.0.0';
 const flareUp = {
 	classifiers: {}

@@ -6,7 +6,9 @@
 	* @since 1.0.0
 	*
 	* @param {Array} [attribs] Data attributes. 
+	* @param {Array} [attribsNew] Subset of attributes (equal to [attribs] at first, but later corresponds to [attributes] - best)
 	* @param {Array} [examples] Data examples.
+	* @param {Array} [examplesNew] Subset of examples (equal to [examples] at first, but later corresponds to [examples_i])
 	* @param [defaultVal] Default value to be returned in case examples array is empty.
 	*
 	* @returns {Object} Decision Tree object constructed by the algorithm.
@@ -15,7 +17,7 @@ const columns = require('./columns');
 const mode  = require('./mode');
 const chooseAttrib = require('./chooseAttrib');
 
-function decisionTreeLearning(attribs, attribsNew, examples, examplesNew, defaultVal) {
+function ID3(attribs, attribsNew, examples, examplesNew, defaultVal) {
 	const N = examplesNew.length;
 	const M = examples[0].length;
 	if (!examplesNew || !N) return defaultVal;
@@ -25,16 +27,17 @@ function decisionTreeLearning(attribs, attribsNew, examples, examplesNew, defaul
 	const best = chooseAttrib(attribsNew, examplesNew, labels);
 	const tree = {
 		label: best,
+		vals: {}
 	};
 	const m = mode(labels);
 	const i = attribs.indexOf(best);
 	const bestVals = columns(examples, i, i+1);
 	new Set(bestVals).forEach((val) => {
 		const examples_i = examplesNew.filter((row) => row[i] === val);
-		const subtree = decisionTreeLearning(attribs, attribsNew.filter(attrib => attrib !== best['attrib']), examples, examples_i, m);
-		tree[val.toString()] = subtree;
+		const subtree = ID3(attribs, attribsNew.filter(attrib => attrib !== best['attrib']), examples, examples_i, m);
+		tree['vals'][val.toString()] = subtree;
 	});
 	return tree;
 }
 
-module.exports = decisionTreeLearning;
+module.exports = ID3;
