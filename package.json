@@ -2,7 +2,7 @@
   "name": "flare-up",
   "version": "1.0.0",
   "description": "The tiny Machine Learning library hoping to grow up and change the world.",
-  "main": "flareUp.js",
+  "main": "/src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

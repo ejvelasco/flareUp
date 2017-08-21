@@ -29,10 +29,11 @@
 	* @returns {Boolean} Predicted class for example. 
 	* 
 */
-const isObject = require('./isObject');
-const rows = require('./rows');
-const columns = require('./columns');
-const mode = require('./mode');
+const rel = '../../lib/';
+const isObject = require(rel + 'isObject');
+const rows = require(rel +  'rows');
+const columns = require(rel + 'columns');
+const mode = require(rel + 'mode');
 const ID3 = require('./ID3');
 
 class ID3Classifier {

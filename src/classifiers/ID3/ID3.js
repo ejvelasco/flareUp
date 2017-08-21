@@ -13,9 +13,10 @@
 	*
 	* @returns {Object} Decision Tree object constructed by the algorithm.
 */
-const columns = require('./columns');
-const mode  = require('./mode');
-const chooseAttrib = require('./chooseAttrib');
+const rel = '../../lib/';
+const columns = require(rel + 'columns');
+const mode  = require(rel + 'mode');
+const chooseAttrib = require(rel + 'chooseAttrib');
 
 function ID3(attribs, attribsNew, examples, examplesNew, defaultVal) {
 	const N = examplesNew.length;
