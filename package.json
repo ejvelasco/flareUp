@@ -8,6 +8,9 @@
   },
   "author": "Eduardo J. Velasco",
   "license": "MIT",
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "csv-parse": "^1.2.1"
+  },
+  "devDependencies": {
+  }
 }

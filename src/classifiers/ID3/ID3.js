@@ -1,5 +1,5 @@
 /*
-	* Decision Tree Machine Learning algorithm based on the algorithm in figure 18.5 (p.702) of Artificial Intelligence: A Modern Approach, 
+	* Decision Tree Machine Learning algorithm loosely based on the algorithm in figure 18.5 (p.702) of Artificial Intelligence: A Modern Approach, 
 	* by Stuart J. Russell and Peter Norvig, 3rd ed.
 	* 
 	* @member of flareUp
@@ -18,24 +18,22 @@ const columns = require(rel + 'columns');
 const mode  = require(rel + 'mode');
 const chooseAttrib = require(rel + 'chooseAttrib');
 
-function ID3(attribs, attribsNew, examples, examplesNew, defaultVal) {
-	const N = examplesNew.length;
-	const M = examples[0].length;
-	if (!examplesNew || !N) return defaultVal;
-	const labels = columns(examplesNew.slice(0, N), M - 1, M);
-	if (!attribsNew || !attribsNew.length) return mode(labels);
+function ID3(attribs, examples, examplesParent) {
+	const labels = examples.map((example) => example.label);
+	const labelsParent = examplesParent.map((example) => example.label);
+	if (!examples.length) return mode(labelsParent);
 	if (new Set(labels).size === 1) return labels[0];
-	const best = chooseAttrib(attribsNew, examplesNew, labels);
+	if (!attribs.length) return mode(labels);
+	const bestAttrib = chooseAttrib(attribs, examples, labels);
 	const tree = {
-		label: best,
+		label: bestAttrib,
 		vals: {}
 	};
 	const m = mode(labels);
-	const i = attribs.indexOf(best);
-	const bestVals = columns(examples, i, i+1);
-	new Set(bestVals).forEach((val) => {
-		const examples_i = examplesNew.filter((row) => row[i] === val);
-		const subtree = ID3(attribs, attribsNew.filter(attrib => attrib !== best['attrib']), examples, examples_i, m);
+	const bestAttribUniqueVals = new Set(examplesParent.map((example) => example[bestAttrib]));
+	bestAttribUniqueVals.forEach((val) => {
+		const exs = examples.filter((example) => example[bestAttrib] === val);
+		const subtree = ID3(attribs.filter((attrib) => attrib !== bestAttrib), exs, examples);
 		tree['vals'][val.toString()] = subtree;
 	});
 	return tree;

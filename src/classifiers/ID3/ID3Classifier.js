@@ -35,21 +35,38 @@ const rows = require(rel +  'rows');
 const columns = require(rel + 'columns');
 const mode = require(rel + 'mode');
 const ID3 = require('./ID3');
+const uuidv4 = require('uuid/v4');
 
 class ID3Classifier {
 	constructor() {
 		this.tree = null;
 	}
-	fit(attribs, examples, labels) {
-		return this.tree = ID3(attribs, attribs, examples, examples, mode(labels)); 
+	fit(examples) {
+		const attribs = Object.keys(examples[0]).filter((key) => key !== 'label');
+		return this.tree = ID3(attribs, examples, examples); 
 	}
 	print() {
 		console.log(JSON.stringify(this.tree, null, '  '));
 	}
 	predict(tree, attribs, example) {
-		const label = example[attribs.indexOf(tree.label)]; 
+		const label = example[tree.label]; 
 		const val = tree['vals'][label];
 		return isObject(val) ? this.predict(val, attribs, example) : val;
+	}
+	processData(attribs, examples, label) {
+		const examplesProcessed = [];
+		examples.forEach((example) => {
+			const exampleProcessed = {};
+			example.forEach((val, i) => {
+				if (attribs[i] === label) {
+					exampleProcessed['label'] = val; 
+				} else {
+					exampleProcessed[attribs[i]] = val;
+				}
+			});
+			examplesProcessed.push(exampleProcessed);
+		});
+		return examplesProcessed;
 	}
 }
 

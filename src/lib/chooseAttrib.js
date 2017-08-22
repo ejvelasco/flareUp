@@ -19,7 +19,7 @@ function chooseAttrib(attribs, examples, labels) {
 	const N = labels.filter(label => !label).length; 
 	attribs.forEach((attrib, i) => {
 		const subsets = {};
-		const vals = columns(examples, i, i+1);
+		const vals = examples.map((example) => example[attrib]);
 		vals.forEach((val, j) => {
 			const valSafe = val.toString();
 			if (subsets[valSafe]) {
