@@ -25,6 +25,6 @@ function entropy(a) {
 		return -P_PROP*Math.log2(P_PROP);
 	}
 	return -P_PROP*Math.log2(P_PROP)-N_PROP*Math.log2(N_PROP);
-};
+}
 
 module.exports = entropy;

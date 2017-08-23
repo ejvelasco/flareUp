@@ -1,5 +1,5 @@
 function isObject (a) {
-    return (!!a) && (a.constructor === Object);
+	return (!!a) && (a.constructor === Object);
 }
 
 module.exports = isObject;
