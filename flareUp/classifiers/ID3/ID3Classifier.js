@@ -4,17 +4,15 @@
 	* @member of flareUp
 	* @since 1.0.0
 	*
-	* @function - fit
+	* @function - train
 	*
 	* Constructs decision tree with ID3 algorithm.
 	* 
-	* @param {Array} [attribs] Array of data attributes. 
 	* @param {Array} [examples] Array of data examples.
-	* @param {Array} [labels] Data labels to be analyzed.
 	*
 	* @returns {Object} Decision tree.
 	* 
-	* @function - print
+	* @function - printTree
 
 	* Prints a pretty version of this.tree.
 	*
@@ -31,31 +29,33 @@
 */
 const rel = '../../lib/';
 const isObject = require(rel + 'isObject');
-const rows = require(rel +  'rows');
-const columns = require(rel + 'columns');
-const mode = require(rel + 'mode');
+const shuffle = require(rel + 'shuffle');
 const ID3 = require('./ID3');
-const uuidv4 = require('uuid/v4');
 
 class ID3Classifier {
+	accuracy(tree, attribs, examples) {
+		let numRight = 0;
+		examples.forEach((example) => {
+			const prediction = this.predict(tree, attribs, example);
+			if (prediction === example.label) {
+				numRight++;
+			}
+		});
+		return ((numRight / examples.length) * 100).toFixed(2).toString() + '%';
+	}
 	constructor() {
 		this.tree = null;
-	}
-	fit(examples) {
-		const attribs = Object.keys(examples[0]).filter((key) => key !== 'label');
-		return this.tree = ID3(attribs, examples, examples); 
-	}
-	print() {
-		console.log(JSON.stringify(this.tree, null, '  '));
 	}
 	predict(tree, attribs, example) {
 		const label = example[tree.label]; 
 		const val = tree['vals'][label];
 		return isObject(val) ? this.predict(val, attribs, example) : val;
 	}
+	printTree() {
+		console.log(JSON.stringify(this.tree, null, '  '));
+	}
 	processData(attribs, examples, label) {
-		const examplesProcessed = [];
-		examples.forEach((example) => {
+		const examplesProcessed = examples.map((example) => {
 			const exampleProcessed = {};
 			example.forEach((val, i) => {
 				if (attribs[i] === label) {
@@ -64,9 +64,18 @@ class ID3Classifier {
 					exampleProcessed[attribs[i]] = val;
 				}
 			});
-			examplesProcessed.push(exampleProcessed);
+			return exampleProcessed;
 		});
-		return examplesProcessed;
+		return shuffle(examplesProcessed); 
+	}
+	train(examples = []) {
+		const attribs = Object.keys(examples[0]).filter((key) => key !== 'label');
+		return this.tree = ID3(attribs, examples, examples); 
+	}
+	split(examples = [], fraction = .8) {
+		// implement 'representative' split in the future
+		const i = Math.floor(examples.length * fraction);
+		return [examples.slice(0, i), examples.slice(i, examples.length)];
 	}
 }
 

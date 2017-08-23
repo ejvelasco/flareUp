@@ -1,5 +1,5 @@
 /*
-	* Decision Tree Machine Learning algorithm loosely based on the algorithm in figure 18.5 (p.702) of Artificial Intelligence: A Modern Approach, 
+	* Decision Tree Machine Learning algorithm based on the algorithm in figure 18.5 (p.702) of Artificial Intelligence: A Modern Approach, 
 	* by Stuart J. Russell and Peter Norvig, 3rd ed.
 	* 
 	* @member of flareUp
@@ -13,30 +13,25 @@
 */
 const rel = '../../lib/';
 const mode  = require(rel + 'mode');
-const chooseAttrib = require(rel + 'chooseAttrib');
-
-function isNumbers (a) {
-	return a.every((el) => /^\d+$/.test(el));
-}
+const chooseAttrib = require('./chooseAttrib');
 
 function ID3(attribs, examples, examplesParent) {
 	const labels = examples.map((example) => example.label);
 	const labelsParent = examplesParent.map((example) => example.label);
 	if (!examples.length) return mode(labelsParent);
-	if (new Set(labels).size === 1) return labels[0];
+	if ([...new Set(labels)].length === 1) return labels[0];
 	if (!attribs.length) return mode(labels);
 	const bestAttrib = chooseAttrib(attribs, examples, labels);
 	const tree = {
 		label: bestAttrib,
 		vals: {}
 	};
-	const m = mode(labels);
-	let bestAttribUniqueVals = [...new Set(examplesParent.map((example) => example[bestAttrib]))];
-		bestAttribUniqueVals.forEach((val) => {
-			const exs = examples.filter((example) => example[bestAttrib] === val);
-			const subtree = ID3(attribs.filter((attrib) => attrib !== bestAttrib), exs, examples);
-			tree['vals'][val.toString()] = subtree;
-		});
+	const bestAttribUniqueVals = [...new Set(examplesParent.map((example) => example[bestAttrib]))];
+	bestAttribUniqueVals.forEach((val) => {
+		const exs = examples.filter((example) => example[bestAttrib] === val);
+		const subtree = ID3(attribs.filter((attrib) => attrib !== bestAttrib), exs, examples);
+		tree['vals'][val.toString()] = subtree;
+	});
 	return tree;
 }
 

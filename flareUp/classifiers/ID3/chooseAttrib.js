@@ -11,20 +11,15 @@
 	* @returns {String} Best data attribute to select.
 */
 const entropy = require('./entropy');
+const splitInfo = require('./splitInfo');
 
-function splitInfo(set, subset) {
-	const S = set.length;
-	const T = subset.length;
-	return -(S/T)*Math.log2(S/T);
-
-}
 function chooseAttrib(attribs, examples, labels) {
 	const gainRatios = [];
 	const labelsUnique = [...new Set(labels)];
 	labels = labels.map((label) => (label === labelsUnique[0]) ? true : false);
 	const P = labels.filter(label => label).length;
 	const N = labels.filter(label => !label).length; 
-	attribs.forEach((attrib, i) => {
+	attribs.forEach((attrib) => {
 		const subsets = {};
 		const vals = examples.map((example) => example[attrib]);
 		vals.forEach((val, j) => {
@@ -52,6 +47,6 @@ function chooseAttrib(attribs, examples, labels) {
 	});
 	gainRatios.sort((a, b) => b.ratio - a.ratio);
 	return gainRatios[0]['attrib'];
-};
+}
 
 module.exports = chooseAttrib;
