@@ -10,11 +10,18 @@
 	*
 	* @returns {String} Best data attribute to select.
 */
-const columns = require('./columns');
 const entropy = require('./entropy');
 
+function splitInfo(set, subset) {
+	const S = set.length;
+	const T = subset.length;
+	return -(S/T)*Math.log2(S/T);
+
+}
 function chooseAttrib(attribs, examples, labels) {
-	const gains = [];
+	const gainRatios = [];
+	const labelsUnique = [...new Set(labels)];
+	labels = labels.map((label) => (label === labelsUnique[0]) ? true : false);
 	const P = labels.filter(label => label).length;
 	const N = labels.filter(label => !label).length; 
 	attribs.forEach((attrib, i) => {
@@ -29,19 +36,22 @@ function chooseAttrib(attribs, examples, labels) {
 			}
 		});
 		let remainder = 0;
+		let norm = 0;
 		Object.keys(subsets).forEach((subset) => {
 			const P_i = subsets[subset].filter(label => label).length;
 			const N_i = subsets[subset].filter(label => !label).length;
 			remainder += ((P_i+N_i)/(P+N))*entropy(subsets[subset]);
+			norm += splitInfo(vals, subsets[subset]);
 		});
-		const gain = {
+		const gain = entropy(labels) - remainder;
+		const gainRatio = {
 			attrib, 
-			gain: (entropy(labels) - remainder).toFixed(3),
+			ratio: (gain/norm).toFixed(3),
 		};
-		gains.push(gain);
+		gainRatios.push(gainRatio);
 	});
-	gains.sort((a, b) => b.gain - a.gain);
-	return gains[0]['attrib'];
+	gainRatios.sort((a, b) => b.ratio - a.ratio);
+	return gainRatios[0]['attrib'];
 };
 
 module.exports = chooseAttrib;

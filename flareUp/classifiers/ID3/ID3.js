@@ -6,17 +6,18 @@
 	* @since 1.0.0
 	*
 	* @param {Array} [attribs] Data attributes. 
-	* @param {Array} [attribsNew] Subset of attributes (equal to [attribs] at first, but later corresponds to [attributes] - best)
 	* @param {Array} [examples] Data examples.
-	* @param {Array} [examplesNew] Subset of examples (equal to [examples] at first, but later corresponds to [examples_i])
-	* @param [defaultVal] Default value to be returned in case examples array is empty.
+	* @param {Array} [examplesParent] Data examples from parent node.
 	*
 	* @returns {Object} Decision Tree object constructed by the algorithm.
 */
 const rel = '../../lib/';
-const columns = require(rel + 'columns');
 const mode  = require(rel + 'mode');
 const chooseAttrib = require(rel + 'chooseAttrib');
+
+function isNumbers (a) {
+	return a.every((el) => /^\d+$/.test(el));
+}
 
 function ID3(attribs, examples, examplesParent) {
 	const labels = examples.map((example) => example.label);
@@ -30,12 +31,12 @@ function ID3(attribs, examples, examplesParent) {
 		vals: {}
 	};
 	const m = mode(labels);
-	const bestAttribUniqueVals = new Set(examplesParent.map((example) => example[bestAttrib]));
-	bestAttribUniqueVals.forEach((val) => {
-		const exs = examples.filter((example) => example[bestAttrib] === val);
-		const subtree = ID3(attribs.filter((attrib) => attrib !== bestAttrib), exs, examples);
-		tree['vals'][val.toString()] = subtree;
-	});
+	let bestAttribUniqueVals = [...new Set(examplesParent.map((example) => example[bestAttrib]))];
+		bestAttribUniqueVals.forEach((val) => {
+			const exs = examples.filter((example) => example[bestAttrib] === val);
+			const subtree = ID3(attribs.filter((attrib) => attrib !== bestAttrib), exs, examples);
+			tree['vals'][val.toString()] = subtree;
+		});
 	return tree;
 }
 
