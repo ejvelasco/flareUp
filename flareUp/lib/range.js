@@ -5,7 +5,7 @@
 	* @since 1.0.0
 	*
 	* @param {number} [start] Start of range, inclusive.
-	* @param {number} [end] End of range, not inclusive.
+	* @param {number} [end] End of range, exclusive.
 	* @param {number} [step] Value to increment/decrement range.
 	*
 	* @returns {Array} Numbers [start, end), incrementing/decrementing by step.
