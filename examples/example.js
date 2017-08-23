@@ -1,40 +1,39 @@
 const fs = require('fs');
 const csv = require('fast-csv');
-const flareUp = require('../src/index');
+const flareUp = require('../flareUp/index');
 
-function shuffle(a) {
-	let m = a.length, t = m, i = m;
-	while (m) {
-		i = Math.floor(Math.random() * m--);
-		t = a[m];
-		a[m] = a[i];
-		a[i] = t;
-	}
-	return a;
-}
-let dataSet = [];
-const stream = fs.createReadStream("mushrooms.csv");
-const csvStream = csv()
-.on("data", (data) => {
+function onData(data) {
 	dataSet.push(data);
-})
-.on("end", () => {
-	dataSet = dataSet.filter(row => !row.some(val => val === '?'));
-	const i = Math.floor(dataSet.length * .80);
-	const attribs = flareUp.range(dataSet[0].length);
-	const classifier = new flareUp.classifiers.ID3Classifier();
+}
+
+function onEnd() {
+	// drop rows with missing values
+	const examples = dataSet.filter(row => !row.some(val => val === '?'));
+	// set index to split data
+	const i = Math.floor(examples.length * .80);
+	// since attribs are anonymous, assign them numerical names
+	const attribs = flareUp.range(examples[0].length);
+	// first column is the edible / poisonous label
 	const label = attribs[0];
-	const dataSetProcessed = shuffle(classifier.processData(attribs, dataSet, label));
-	const trainSet = dataSetProcessed.slice(0, i);
-	const testSet = dataSetProcessed.slice(i, dataSetProcessed.length);
-	const tree = classifier.fit(trainSet);
-	let right = 0;
+	// process data
+	const classifier = new flareUp.classifiers.ID3Classifier();
+	const examplesProcessed = flareUp.shuffle(classifier.processData(attribs, dataSet, label));
+	const trainSet = examplesProcessed.slice(0, i);
+	const testSet = examplesProcessed.slice(i, examplesProcessed.length);
+	// construct tree from training set
+	const tree = classifier.train(trainSet);
+	// quick accuracy test with test set
+	let numRight = 0;
 	testSet.forEach((example) => {
 		const prediction = classifier.predict(tree, attribs, example);
 		if (prediction === example.label) {
-			right++;
+			numRight++;
 		}
 	});
-	console.log(right / testSet.length);
-});
+	console.log( 'Samples Correctly Predicted: '+ ((numRight / testSet.length) * 100).toFixed(2).toString() + '%');
+}
+// parse csv data into array
+const dataSet = [];
+const stream = fs.createReadStream('mushrooms.csv');
+const csvStream = csv().on('data', onData).on('end', onEnd);
 stream.pipe(csvStream);
