@@ -9,7 +9,6 @@ function onData(data) {
 function onEnd() {
 	// drop rows with missing values
 	const examples = dataSet.filter(row => !row.some(val => val === '?'));
-	// set index to split data
 	// since attribs are anonymous, assign them numerical names
 	const attribs = flareUp.range(examples[0].length);
 	// first column is the edible / poisonous label
