@@ -9,6 +9,6 @@
   "author": "Eduardo J. Velasco",
   "license": "MIT",
   "dependencies": {
-    "csv-parse": "^1.2.1"
+    "fast-csv": "^2.4.0"
   }
 }
