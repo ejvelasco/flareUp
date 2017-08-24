@@ -1,6 +1,5 @@
 /*
-	* Decision Tree Machine Learning algorithm based on the algorithm in figure 18.5 (p.702) of Artificial Intelligence: A Modern Approach, 
-	* by Stuart J. Russell and Peter Norvig, 3rd ed.
+	*
 	* 
 	* @member of flareUp
 	* @since 1.0.0
@@ -12,8 +11,9 @@
 	* @returns {Object} Decision Tree object constructed by the algorithm.
 */
 const rel = '../../lib/';
-const mode  = require(rel + 'mode');
+const range = require(rel + 'range');
 const chooseAttrib = require('./chooseAttrib');
+const mode  = require(rel + 'mode');
 
 function ID3(attribs, examples, examplesParent) {
 	const labels = examples.map((example) => example.label);
@@ -26,7 +26,7 @@ function ID3(attribs, examples, examplesParent) {
 		label: bestAttrib,
 		vals: {}
 	};
-	const bestAttribUniqueVals = [...new Set(examplesParent.map((example) => example[bestAttrib]))];
+	let bestAttribUniqueVals = [...new Set(examplesParent.map((example) => example[bestAttrib]))];
 	bestAttribUniqueVals.forEach((val) => {
 		const exs = examples.filter((example) => example[bestAttrib] === val);
 		const subtree = ID3(attribs.filter((attrib) => attrib !== bestAttrib), exs, examples);
