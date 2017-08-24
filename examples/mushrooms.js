@@ -1,3 +1,6 @@
+/* 
+* Predicts whether a mushroom is edible or poisonous.
+*/
 const fs = require('fs');
 const csv = require('fast-csv');
 const flareUp = require('../flareUp/index');
