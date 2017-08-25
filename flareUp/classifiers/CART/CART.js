@@ -7,8 +7,7 @@ function cost(attrib, left, right) {
 	const M = M_L + M_R;
 	const G_L = gini(left, M);
 	const G_R = gini(right, M);
-	const res = (M_L/M)*G_L + (M_R/M)*G_R; 
-	return res;
+	return (M_L/M)*G_L + (M_R/M)*G_R; 
 }
 
 function gini(a) {
@@ -53,19 +52,19 @@ function calcProbs(examples, labels) {
 	return probs;
 }
 
-function CART(examples, depth = 0, max_depth = 10) {
+function CART(examples, depth = 0, MAX_DEPTH = 10) {
 	const labels = examples.map((example) => example.label);
 	const labelsNoDups = [...new Set(labels)];
-	if (depth === max_depth) return mode(labels);
+	if (depth === MAX_DEPTH) return mode(labels);
 	if (gini(examples) === 0) return labelsNoDups[0];
 	const attribs = Object.keys(examples[0]).filter(attrib => attrib !== 'label');
-	const bestSplit = chooseSplit(attribs, examples, labelsNoDups);	
+	const split = chooseSplit(attribs, examples, labelsNoDups);	
 	depth++;
 	const tree = {
-		split: bestSplit.attrib + ' <= ' + bestSplit.val,
+		split: split.attrib + ' <= ' + split.val,
 		probs: calcProbs(examples, labelsNoDups),
-		left: CART(bestSplit.left, depth, max_depth),
-		right: CART(bestSplit.right, depth, max_depth),  
+		left: CART(split.left, depth, MAX_DEPTH),
+		right: CART(split.right, depth, MAX_DEPTH),  
 	};
 	return tree;
 }
