@@ -1,9 +1,9 @@
 /* 
-* Predicts whether a mushroom is edible or poisonous.
+* Predicts whether SPECT heart data is normal or abnormal.
 */
 const fs = require('fs');
 const csv = require('fast-csv');
-const flareUp = require('../flareUp/index');
+const flareUp = require('../../../flareUp/index');
 
 function onData(data) {
 	dataSet.push(data);
@@ -14,7 +14,7 @@ function onEnd() {
 	const examples = dataSet.filter(row => !row.some(val => val === '?'));
 	// since attribs are anonymous, assign them numerical names
 	const attribs = flareUp.range(examples[0].length);
-	// first column is the edible / poisonous label
+	// first column is the normal / abnormal label
 	const label = attribs[0];
 	// process data
 	const classifier = new flareUp.classifiers.ID3Classifier();
@@ -28,6 +28,6 @@ function onEnd() {
 }
 // // parse csv data into array
 const dataSet = [];
-const stream = fs.createReadStream('mushrooms.csv');
+const stream = fs.createReadStream('heart.csv');
 const csvStream = csv().on('data', onData).on('end', onEnd);
 stream.pipe(csvStream);
