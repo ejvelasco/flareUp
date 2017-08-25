@@ -8,9 +8,9 @@ function onData(data) {
 
 function onEnd() {
 	const examples = dataSet.filter(row => !row.some(val => val === '?'));
-	const classifier = new flareUp.classifiers.CARTClassifier();
 	const attribs = ['Sepal Length', 'Sepal Width', 'Petal Length', 'Petal Width', 'Class'];
 	const label = attribs[attribs.length - 1];
+	const classifier = new flareUp.classifiers.CARTClassifier();
 	const examplesProcessed = classifier.processData(attribs, examples, label);
 	classifier.train(examplesProcessed, attribs);
 	classifier.printTree();
