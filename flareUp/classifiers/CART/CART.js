@@ -1,4 +1,4 @@
-const rel = '../../lib/'
+const rel = '../../lib/';
 const mode = require(rel + 'mode');
 
 function cost(attrib, left, right) {
@@ -34,7 +34,7 @@ function chooseSplit(attribs, examples) {
 				left,
 				right,
 				cost: cost(attrib, left, right), 
-			}
+			};
 			splits.push(split);
 		});
 	});

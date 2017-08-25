@@ -5,7 +5,7 @@ const shuffle = require(rel + 'shuffle');
 
 const methods = {
 	predict() {
-		console.log('hey');
+		console.log('To be implemented');
 	},
 	printTree() {
 		if (this.tree) {
