@@ -5,9 +5,9 @@
 	* Released under MIT license LICENSE_URL
 */
 const libPath = './lib/';
-const classifierPaths = ['./classifiers/ID3/']; 
+const classifierPaths = ['./classifiers/ID3/', './classifiers/CART/']; 
 const modules = ['range', 'mode', 'rows', 'columns', 'isObject', 'shuffle'];
-const classifiers = ['ID3Classifier'];
+const classifiers = ['ID3Classifier', 'CARTClassifier'];
 const VERSION = '1.0.0';
 const flareUp = {
 	classifiers: {}

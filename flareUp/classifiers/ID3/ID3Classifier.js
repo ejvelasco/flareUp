@@ -33,6 +33,9 @@ const shuffle = require(rel + 'shuffle');
 const ID3 = require('./ID3');
 
 class ID3Classifier {
+	constructor() {
+		this.tree = null;
+	}
 	accuracy(tree, attribs, examples) {
 		let numRight = 0;
 		examples.forEach((example) => {
@@ -42,9 +45,6 @@ class ID3Classifier {
 			}
 		});
 		return ((numRight / examples.length) * 100).toFixed(2).toString() + '%';
-	}
-	constructor() {
-		this.tree = null;
 	}
 	predict(tree, attribs, example) {
 		const label = example[tree.label]; 
