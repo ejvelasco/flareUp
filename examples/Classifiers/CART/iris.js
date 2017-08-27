@@ -12,8 +12,16 @@ function onEnd() {
 	const label = attribs[attribs.length - 1];
 	const classifier = new flareUp.classifiers.CARTClassifier();
 	const examplesProcessed = classifier.processData(attribs, examples, label);
-	classifier.train(examplesProcessed, attribs);
-	classifier.printTree();
+	const [trainSet, testSet] = classifier.split(examplesProcessed);
+	const tree = classifier.train(trainSet);
+	classifier.train(trainSet, attribs);
+	let numRight = 0;
+	testSet.forEach((example) => {
+		if (classifier.predict(tree, example) == example.label) {
+			numRight++;
+		}
+	});
+	console.log(numRight / testSet.length);
 }
 const dataSet = [];
 const stream = fs.createReadStream('iris.csv');
