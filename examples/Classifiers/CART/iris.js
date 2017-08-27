@@ -17,7 +17,7 @@ function onEnd() {
 	classifier.train(trainSet, attribs);
 	let numRight = 0;
 	testSet.forEach((example) => {
-		if (classifier.predict(tree, example) == example.label) {
+		if (classifier.predict(tree, example) == example['label']) {
 			numRight++;
 		}
 	});
