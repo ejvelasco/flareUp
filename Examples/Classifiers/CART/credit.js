@@ -8,22 +8,14 @@ function onData(data) {
 
 function onEnd() {
 	const examples = dataSet.filter(row => !row.some(val => val === '?'));
-	const attribs = ['Sepal Length', 'Sepal Width', 'Petal Length', 'Petal Width', 'Class'];
+	const attribs = flareUp.range(examples[0].length);
 	const label = attribs[attribs.length - 1];
 	const classifier = new flareUp.classifiers.CARTClassifier();
 	const examplesProcessed = classifier.processData(attribs, examples, label);
 	const [trainSet, testSet] = classifier.split(examplesProcessed);
-	const tree = classifier.train(trainSet);
-	classifier.train(trainSet, attribs);
-	let numRight = 0;
-	testSet.forEach((example) => {
-		if (classifier.predict(tree, example) == example['label']) {
-			numRight++;
-		}
-	});
-	console.log(numRight / testSet.length);
+	flareUp.save();
 }
 const dataSet = [];
-const stream = fs.createReadStream('iris.csv');
+const stream = fs.createReadStream('credit.csv');
 const csvStream = csv().on('data', onData).on('end', onEnd);
 stream.pipe(csvStream);
