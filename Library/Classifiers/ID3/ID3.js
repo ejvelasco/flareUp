@@ -10,7 +10,7 @@
 	*
 	* @returns {Object} Decision Tree object constructed by the algorithm.
 */
-const rel = '../../lib/';
+const rel = '../../Methods/';
 const range = require(rel + 'range');
 const chooseAttrib = require('./chooseAttrib');
 const mode  = require(rel + 'mode');

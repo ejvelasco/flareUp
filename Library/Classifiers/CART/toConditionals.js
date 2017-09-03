@@ -1,4 +1,4 @@
-const rel = '../../lib/';
+const rel = '../../Methods/';
 const isObject = require(rel + 'isObject');
 const range = require(rel + 'range');
 const fs = require('fs');

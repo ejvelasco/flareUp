@@ -27,7 +27,7 @@
 	* @returns {Boolean} Predicted class for example. 
 	* 
 */
-const rel = '../../lib/';
+const rel = '../../Methods/';
 const isObject = require(rel + 'isObject');
 const shuffle = require(rel + 'shuffle');
 const ID3 = require('./ID3');

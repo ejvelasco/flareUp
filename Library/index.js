@@ -4,9 +4,9 @@
 	* Copyright Eduardo J. Velasco MAIN_CONTRIBUTOR_URL
 	* Released under MIT license LICENSE_URL
 */
-const libPath = './lib/';
-const classifierPaths = ['./classifiers/ID3/', './classifiers/CART/']; 
-const modules = ['range', 'mode', 'rows', 'columns', 'isObject', 'shuffle', 'save'];
+const libPath = './Methods/';
+const classifierPaths = ['./Classifiers/ID3/', './Classifiers/CART/']; 
+const modules = ['range', 'mode', 'rows', 'columns', 'isObject', 'shuffle', 'save', 'load'];
 const classifiers = ['ID3Classifier', 'CARTClassifier'];
 const VERSION = '1.0.0';
 const flareUp = {

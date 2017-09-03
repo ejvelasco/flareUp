@@ -36,11 +36,12 @@ function save(data = [], fileName = '', onEnd) {
 		const msg = `onEnd is not a function. ${docs}`;
 		throw(new Error(msg));
 	}
-	const file = fs.createWriteStream(fileName).on('error', onError);
+	const stream = fs.createWriteStream(fileName)
+		.on('error', onError);
 	data.forEach((example) => {
-		file.write(exampleToCSV(example));	
+		stream.write(exampleToCSV(example));	
 	});
-	file.end(onEnd);
+	stream.end(onEnd);
 }
 
 module.exports = save;

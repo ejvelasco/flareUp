@@ -1,11 +1,11 @@
 const Classifier = require('../Classifier');
 const CART = require('./CART');
-const rel = '../../lib/';
+const rel = '../../Methods/';
 const shuffle = require(rel + 'shuffle');
 const isObject = require(rel + 'isObject');
 const fs = require('fs');
 const toConditionals = require('./toConditionals');
-const columns = require('../../lib/columns');
+const columns = require(rel + 'columns');
 
 function catToInt(column) {
 	const categories = {};

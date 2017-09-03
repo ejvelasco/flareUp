@@ -1,4 +1,4 @@
-const rel = '../../lib/';
+const rel = '../../Methods/';
 const mode = require(rel + 'mode');
 const gini = require('./gini');
 const chooseSplit = require('./chooseSplit');
