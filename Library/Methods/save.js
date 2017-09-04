@@ -42,7 +42,7 @@ function save(data = [], attribs = [], fileName = '', onEnd) {
 	}
 	const stream = fs.createWriteStream(fileName)
 		.on('error', onError);
-	stream.write(attribs.join(','));
+	stream.write(attribs.join(',') + '\n');
 	data.forEach((example) => {
 		stream.write(exampleToCSV(example));	
 	});
