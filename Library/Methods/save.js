@@ -18,26 +18,31 @@ function isFunction(a) {
 	return typeof a === 'function';
 }
 
-function save(data = [], fileName = '', onEnd) {
+function save(data = [], attribs = [], fileName = '', onEnd) {
 	const docs = 'Please review the documentation on flareUp.save().';
 	if (!data.length) {
 		const msg = `Empty data array. ${docs}`;
 		throw(new Error(msg));
 	}
-	if(data.some(example => isObject(example) === false)) {
-		const msg = `Invalid data array elements. ${docs}`;
+	if (!attribs.length) {
+		const msg = `Empty attributes array. ${docs}`;
 		throw(new Error(msg));
 	}
 	if (!fileName.length) {
 		const msg = `No target file name was provided. ${docs}`;
 		throw(new Error(msg));	
 	}
-	if (!isFunction(onEnd)) {
+	if(data.some(example => isObject(example) === false)) {
+		const msg = `Invalid data array elements. ${docs}`;
+		throw(new Error(msg));
+	}
+	if (!isFunction(onEnd) && onEnd) {
 		const msg = `onEnd is not a function. ${docs}`;
 		throw(new Error(msg));
 	}
 	const stream = fs.createWriteStream(fileName)
 		.on('error', onError);
+	stream.write(attribs.join(','));
 	data.forEach((example) => {
 		stream.write(exampleToCSV(example));	
 	});
