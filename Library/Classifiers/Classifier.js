@@ -1,7 +1,7 @@
 class Classifier {
-	constructor(methods) {
-		Object.keys(methods).forEach((method) => {
-			this[method] = methods[method];
+	constructor(members) {
+		members.forEach((member) => {
+			this[member['name']] = member['method'];
 		});
 	}
 }
