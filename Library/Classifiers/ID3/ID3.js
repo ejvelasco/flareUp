@@ -10,10 +10,10 @@
 	*
 	* @returns {Object} Decision Tree object constructed by the algorithm.
 */
-const rel = '../../Methods/';
-const range = require(rel + 'range');
 const chooseAttrib = require('./chooseAttrib');
-const mode  = require(rel + 'mode');
+const methodsPath = require('./methodsPath');
+const range = require(methodsPath + 'range');
+const mode  = require(methodsPath + 'mode');
 
 function ID3(attribs, examples, examplesParent) {
 	const labels = examples.map((example) => example.label);

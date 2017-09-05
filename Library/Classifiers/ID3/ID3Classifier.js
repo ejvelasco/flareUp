@@ -27,15 +27,16 @@
 	* @returns {Boolean} Predicted class for example. 
 	* 
 */
-const rel = '../../Methods/';
-const isObject = require(rel + 'isObject');
-const shuffle = require(rel + 'shuffle');
+const Classifier = require('../Classifier');
 const ID3 = require('./ID3');
+const methodsPath = require('./methodsPath');
+const isObject = require(methodsPath + 'isObject');
+const shuffle = require(methodsPath + 'shuffle');
 
-class ID3Classifier {
+const members = {
 	constructor() {
 		this.tree = null;
-	}
+	},
 	accuracy(tree, attribs, examples) {
 		let numRight = 0;
 		examples.forEach((example) => {
@@ -45,15 +46,20 @@ class ID3Classifier {
 			}
 		});
 		return ((numRight / examples.length) * 100).toFixed(2).toString() + '%';
-	}
+	},
 	predict(tree, attribs, example) {
 		const label = example[tree.label]; 
 		const val = tree['vals'][label];
 		return isObject(val) ? this.predict(val, attribs, example) : val;
-	}
-	printTree() {
-		console.log(JSON.stringify(this.tree, null, '  '));
-	}
+	},
+	pretty() {
+		if (this.tree === null) {
+			const msg = 'Classifier is not trained. Please review the CARTClassifier documentation.';
+			throw(new Error(msg));
+		}
+		const prettyTree = JSON.stringify(this.tree, null, '  '); 
+		return prettyTree;
+	},
 	processData(attribs, examples, label) {
 		const examplesProcessed = examples.map((example) => {
 			const exampleProcessed = {};
@@ -67,15 +73,21 @@ class ID3Classifier {
 			return exampleProcessed;
 		});
 		return shuffle(examplesProcessed); 
-	}
+	},
 	train(examples = []) {
 		const attribs = Object.keys(examples[0]).filter((key) => key !== 'label');
 		return this.tree = ID3(attribs, examples, examples); 
-	}
+	},
 	split(examples = [], fraction = .8) {
-		// implement 'representative' split in the future
 		const i = Math.floor(examples.length * fraction);
 		return [examples.slice(0, i), examples.slice(i, examples.length)];
+	}
+};
+
+class ID3Classifier extends Classifier {
+	constructor() {
+		super(members);
+		this.tree = null;
 	}
 }
 
