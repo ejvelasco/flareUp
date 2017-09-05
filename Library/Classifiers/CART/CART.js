@@ -1,12 +1,12 @@
-const rel = '../../Methods/';
-const mode = require(rel + 'mode');
 const gini = require('./gini');
 const chooseSplit = require('./chooseSplit');
 const calcProbs = require('./calcProbs');
+const methodsPath = require('./methodsPath');
+const mode = require(methodsPath + 'mode');
 
-function CART(examples = [], depth = 0, depthMax = 10) {
+function CART(examples = [], depthMax = 10, depth = 0) {
 	const labels = examples.map((example) => example['label']);
-	const labelsNoDups = [...new Set(labels)];
+	const labelsNoDups = [... new Set(labels)];
 	if (depth === depthMax) return mode(labels);
 	if (gini(examples) === 0) return labelsNoDups[0];
 	const attribs = Object.keys(examples[0]).filter(attrib => attrib !== 'label');
@@ -15,11 +15,11 @@ function CART(examples = [], depth = 0, depthMax = 10) {
 	const tree = {
 		split: {
 			attrib: split['attrib'],
-			val: split['val'],
+			val: split['val']
 		},
 		probs: calcProbs(examples, labelsNoDups),
-		left: CART(split['left'], depth, depthMax),
-		right: CART(split['right'], depth, depthMax),  
+		left: CART(split['left'], depthMax, depth),
+		right: CART(split['right'], depthMax, depth)  
 	};
 	return tree;
 }
