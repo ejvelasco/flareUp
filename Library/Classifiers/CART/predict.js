@@ -7,7 +7,8 @@ function predict(node, example) {
 	}
 	const attrib = node['split']['attrib'];
 	const val = node['split']['val'];
-	return (example[attrib] <= val) ? this.predict(node['left'], example) : this.predict(node['right'], example);		
+	const res = (example[attrib] <= val) ? predict(node['left'], example) : predict(node['right'], example);		
+	return res;
 }
 
 module.exports = predict;

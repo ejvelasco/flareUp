@@ -29,6 +29,9 @@ function toExample(row, attribs, label) {
 			example[attribs[i]] = val;
 		}
 	});
+	if (example == 0) {
+		console.log(row);
+	}
 	return example;
 }
 
