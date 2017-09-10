@@ -6,7 +6,7 @@
 */
 const libPath = './Methods/';
 const classifierPaths = ['./Classifiers/ID3/', './Classifiers/CART/']; 
-const modules = ['range', 'mode', 'rows', 'columns', 'isObject', 'shuffle', 'save', 'load'];
+const modules = ['range', 'mode', 'rows', 'columns', 'isObject', 'shuffle', 'save', 'load', 'split', 'format'];
 const classifiers = ['ID3Classifier', 'CARTClassifier'];
 const VERSION = '1.0.0';
 const flareUp = {

@@ -1,5 +1,4 @@
 const gini = require('./gini');
-const chooseSplitRF = require('./chooseSplitRF');
 const chooseSplit = require('./chooseSplit');
 const calcProbs = require('./calcProbs');
 const methodsPath = require('./methodsPath');
@@ -11,10 +10,7 @@ function CART(examples = [], def) {
 	if (examples.length === 0) return def;
 	if (gini(examples) === 0) return labelsNoDups[0];
 	const attribs = Object.keys(examples[0]).filter(attrib => attrib !== 'label');
-	let split = chooseSplitRF(attribs, examples, labelsNoDups);
-	if (!split) {
-		split = chooseSplit(attribs, examples, labelsNoDups);
-	}
+	let split = chooseSplit(attribs, examples, labelsNoDups);
 	const tree = {
 		split: {
 			attrib: split['attrib'],
