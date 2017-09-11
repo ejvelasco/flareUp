@@ -1,4 +1,4 @@
-function probabilityOfLabels(examples, labels) {
+function _probabilityOfLabels(examples, labels) {
   const labelByProbability = {};
   labels.forEach((label) => {
     const filtered = examples.filter(example => example['label'] === label);
@@ -9,4 +9,4 @@ function probabilityOfLabels(examples, labels) {
   
 }
 
-export default probabilityOfLabels;
+export default _probabilityOfLabels;
