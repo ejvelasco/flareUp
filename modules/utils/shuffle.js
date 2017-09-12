@@ -5,7 +5,8 @@ function shuffle(array) {
   let t = m;
   let i = m;
   range(1, m).forEach(() => {
-    i = Math.floor(Math.random() * m--);
+    m -= 1;
+    i = Math.floor(Math.random() * m);
     t = array[m];
     array[m] = array[i];
     array[i] = t;
@@ -13,4 +14,4 @@ function shuffle(array) {
   return array;
 }
 
-export default range;
+export default shuffle;
