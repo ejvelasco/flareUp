@@ -5,7 +5,7 @@ import utils from './utils/utils.js';
 const flareUp = {
   ensemble,
   tree, 
-  utils,
+  ...utils,
 }; 
 
 export {
