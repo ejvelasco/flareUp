@@ -1,31 +1,28 @@
-const fs = require('fs');
-const csv = require('fast-csv');
-
-function onError(err) {
-	throw(err);
-}
+import fs from 'fs';
+import csv from 'fast-csv';
 
 function onData(data, chunk) {
-	data.push(chunk);
+  data.push(chunk);
+}
+
+function onError(error) {
+  throw error; 
 }
 
 function load(fileName = '', onEnd) {
-	const docs = 'Please review the documentation on flareUp.load().';
-	if (!fileName.length) {
-		const msg = `No target file name was provided. ${docs}`;
-		throw(new Error(msg));	
-	}
-	const data = [];
-	const stream = fs.createReadStream(fileName);
-	const csvStream = csv()
-		.on('error', onError)
-		.on('data', (chunk) => { 
-			onData(data, chunk); 
-		})
-		.on('end', () => {
-			onEnd(data);
-		});
-	stream.pipe(csvStream);
+  const documentation = 'Please review the documentation on flareUp.load().';
+  if (!fileName) {
+    const message = `No target file name was provided. ${documentation}`;
+    throw new Error(message);  
+  }
+  const data = [];
+  const dataStream = fs.createReadStream(fileName);
+  const csvStream = csv()
+    .on('data', (chunk) => {
+      onData(chunk, data);
+    })
+    .on('end', onEnd);
+  dataStream.pipe(csvStream).on(onError);
 }
 
-module.exports = load;
+export default load;

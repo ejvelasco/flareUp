@@ -1,36 +1,19 @@
-/*
-	* Selects columns of a 2D array
-	* 
-	* @member of flareUp
-	* @since 1.0.0
-	*
-	* @param {Array} [a] 2D Array 
-	* @param {number} [start] start of columns to select, inclusive.
-	* @param {number} [end] end of columns to select, exclusive.
-	*
- 	* @returns {Array} columns selected.
-	*
-	* @example
-	* const a = [
-	* 	[1, 2, 1],
-	* 	[2, 3, 4],
-	* 	[3, 5, 3]
-	* ];
-	*
-	* columns(a, 1, 2); // => [2, 3, 5]
-*/
-const range = require('./range');
+import range from './range';
 
-function columns(a = [], start = 0, end) {
-	if (end === undefined) {
-		end = start;
-		start = 0;
-	}
-	const _columns = [];
-	range(start, end).forEach(i => {
-		_columns.push(a.map((row) => row[i]));
-	});
-	return _columns.length === 1 ? _columns[0] : _columns;
+function columns(array = [], start = 0, end) {
+  if (typeof end === 'undefined') {
+    end = start;
+    start = 0;
+  }
+  const result = [];
+  range(start, end).forEach((i) => {
+    const column = array.map(row => row[i]);
+    result.push(column);
+  });
+  if (result.length === 1) {
+    result[0];
+  }
+  return result;
 }
 
-module.exports = columns;
+export default columns;
