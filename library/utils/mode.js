@@ -1,34 +1,22 @@
-/*
-	* Finds mode of array.
- 	*
- 	* @memberOf flareUp
- 	* @since 1.0.0
- 	*
- 	* @param {Array} [a] Array to be analyzed.
- 	*
- 	* @returns element representing mode of array.
- 	*
- 	* @example 
- 	* mode([true, false, true, true]); // => true
-*/ 
-function mode(a) {
-	if (!a.length) return null;
-	const seen = {};
-	let indexMode = 1;
-	let countMode = 1;
-	a.forEach((el, i) => {
-		const elSafe = el.toString();
-		if (seen[elSafe]) {
-			seen[elSafe]++;
-			if (seen[elSafe] > countMode) {
-				indexMode = i;
-				countMode = seen[elSafe];
-			}
-		} else {
-			seen[elSafe] = 1;
-		}
-	});
-	return a[indexMode];
+function mode(array = []) {
+  if (!array) {
+    return null;
+  } 
+  const seen = {};
+  let indexMode = 1;
+  let countMode = 1;
+  array.forEach((element, i) => {
+    if (seen[element]) {
+      seen[element]++;
+      if (seen[element] > countMode) {
+        indexMode = i;
+        countMode = seen[element];
+      }
+    } else {
+      seen[element] = 1;
+    }
+  });
+  return array[indexMode];
 }
 
-module.exports = mode;
+export default mode;
