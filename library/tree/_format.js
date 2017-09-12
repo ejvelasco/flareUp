@@ -1,49 +1,59 @@
-const methodsPath = require('./methodsPath');
-const shuffle = require(methodsPath + 'shuffle');
-const columns = require(methodsPath + 'columns');
+import { shuffle, columns } from '../utils/index';
 
-function catToInt(column) {
-	const categories = {};
-	let counter = 1;
-	return column.map(val => !categories[val] ? categories[val] = counter++ : categories[val]);
+function categoriesToIntegers(array) {
+  const categories = {};
+  let categoryCount = 1;
+  const result = array.map((element) => {
+    if (typeof categories[element] === 'number') {
+      categories[element] = categoryCount;
+    } else {
+      categoryCount += 1;
+      categories[element] = categoryCount;
+    }
+  });
+  return result;
 }
 
-function toNumber(a) {
-	return a.map(el => Number(el));
+function toNumbers(array) {
+  const result = array.map(element => Number(element));
+  return result;
 }
 
-function isCat(a) {
-	return a.some(el => Number(el) != el);
+function isCategorical(array) {
+  const result = array.some(element => Number(element) != element);
+  return result;
 }
 
-function transpose(a) {
-	return a[0].map((col, i) => a.map(row => row[i]));
+function transpose(array) {
+  const result = array[0].map((column, i) => array.map(row => row[i]));
+  return result;
 }
 
-function toExample(row, attribs, label) {
-	const example = {};
-	row.forEach((val, i) => {
-		if (attribs[i] === label) {
-			example['label'] = val; 
-		} else {
-			example[attribs[i]] = val;
-		}
-	});
-	if (example == 0) {
-		console.log(row);
-	}
-	return example;
+function toExample(row, features, label) {
+  const example = {};
+  row.forEach((value, i) => {
+    const currentFeature = features[i];
+    if (currentFeature === label) {
+      example['label'] = value; 
+    } else {
+      example[currentFeature] = value;
+    }
+  });
+  return example;
 }
 
-function format(data, attribs, label) {
-	const formatted = [];
-	data[0].forEach((datum, i) => {
-		const column = columns(data, i, i + 1);
-		const columnFormatted = isCat(column) ? catToInt(column) : toNumber(column); 
-		formatted.push(columnFormatted);
-	});
-	const examples = transpose(formatted).map((row) => toExample(row, attribs, label));
-	return shuffle(examples);
+function _format(data, features, label) {
+  const firstRow = data[0];
+  let examples = []; 
+  firstRow.forEach((element, i) => {
+    const column = columns(data, i, i + 1);
+    const formatted = isCategorical(column) ? categoriesToIntegers(column) : toNumbers(column); 
+    examples.push(formatted);
+  });
+  examples = transpose(examples);
+  examples = examples.map((row) => toExample(row, features, label));
+  examples = shuffle(examples);
+  return examples;
 }
 
-module.exports = format;
+export default _format;
