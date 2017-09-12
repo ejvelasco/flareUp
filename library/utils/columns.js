@@ -11,7 +11,7 @@ function columns(array = [], start = 0, end) {
     result.push(column);
   });
   if (result.length === 1) {
-    result[0];
+    return result[0];
   }
   return result;
 }

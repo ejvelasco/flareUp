@@ -1,14 +1,16 @@
-function shuffle(a) {
-	let m = a.length;
-	let t = m;
-	let i = m;
-	while (m) {
-		i = Math.floor(Math.random() * m--);
-		t = a[m];
-		a[m] = a[i];
-		a[i] = t;
-	}
-	return a;
+import range from './range';
+
+function shuffle(array) {
+  let m = array.length;
+  let t = m;
+  let i = m;
+  range(1, m).forEach(() => {
+    i = Math.floor(Math.random() * m--);
+    t = array[m];
+    array[m] = array[i];
+    array[i] = t;
+  });
+  return array;
 }
 
-module.exports = shuffle;
+export default range;

@@ -1,4 +1,8 @@
 const modules = [
   'columns', 
-  'isObjectLiteral'
+  'isObjectLiteral', 
+  'load',
+  'mode', 
+  'range', 
+  
 ];
