@@ -1,5 +1,18 @@
-import { load } from './utils/index.js';
-import utils from './utils/index.js';
+import ensemble from './ensemble/ensemble.js';
+import tree from './tree/tree.js';
+import utils from './utils/utils.js';
 
-console.log(utils);
+const flareUp = {
+  ensemble,
+  tree, 
+  utils,
+}; 
+
+export {
+  ensemble,
+  tree, 
+  utils,
+};
+
+export default flareUp;
 
