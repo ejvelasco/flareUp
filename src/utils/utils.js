@@ -1,4 +1,5 @@
 import columns from './columns';
+import format from './format';
 import load from './load';
 import mode from './mode';
 import range from './range';
@@ -9,6 +10,7 @@ import split from './split';
 
 const utils = {
   columns,
+  format,
   load, 
   mode, 
   range, 
@@ -20,6 +22,7 @@ const utils = {
 
 export {
   columns,
+  format,
   load, 
   mode, 
   range, 

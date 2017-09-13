@@ -1,6 +1,6 @@
-import ensemble from './ensemble/ensemble.js';
-import tree from './tree/tree.js';
-import utils from './utils/utils.js';
+import ensemble from './ensemble/ensemble';
+import tree from './tree/tree';
+import utils from './utils/utils';
 
 const flareUp = {
   ensemble,

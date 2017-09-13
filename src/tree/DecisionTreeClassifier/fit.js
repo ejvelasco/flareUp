@@ -1,8 +1,8 @@
 const CART = require('./CART');
 
-function train(examples, def) {
+function fit(examples, def) {
 	this.tree = CART(examples, def);
 	return this.tree;
 }
 
-module.exports = train;
+module.exports = fit;

@@ -1,10 +1,6 @@
 import csv from 'fast-csv';
 import fs from 'fs';
 
-function onData(data, chunk) {
-  data.push(chunk);
-}
-
 function onError(error) {
   throw error; 
 }
@@ -19,10 +15,12 @@ function load(fileName = '', onEnd) {
   const dataStream = fs.createReadStream(fileName);
   const csvStream = csv()
     .on('data', (chunk) => {
-      onData(chunk, data);
+      data.push(chunk);
     })
-    .on('end', onEnd);
-  dataStream.pipe(csvStream).on(onError);
+    .on('end', () => {
+      onEnd(data);
+    });
+  dataStream.pipe(csvStream).on('error', onError);
 }
 
 export default load;

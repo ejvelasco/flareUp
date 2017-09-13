@@ -1,4 +1,5 @@
-import { shuffle, columns } from '../utils/index';
+import shuffle from './shuffle';
+import columns from './columns';
 
 function categoriesToIntegers(array) {
   const categories = {};
@@ -10,6 +11,7 @@ function categoriesToIntegers(array) {
       categoryCount += 1;
       categories[element] = categoryCount;
     }
+    return categoryCount;
   });
   return result;
 }
@@ -42,12 +44,12 @@ function toExample(row, features, label) {
   return example;
 }
 
-function _format(data, features, label) {
+function format(data, features, label) {
   const firstRow = data[0];
   let examples = []; 
   firstRow.forEach((element, i) => {
     const column = columns(data, i, i + 1);
-    const formatted = isCategorical(column) ? categoriesToIntegers(column) : toNumbers(column); 
+    const formatted = isCategorical(column) ? categoriesToIntegers(column) : toNumbers(column);
     examples.push(formatted);
   });
   examples = transpose(examples);
@@ -56,4 +58,4 @@ function _format(data, features, label) {
   return examples;
 }
 
-export default _format;
+export default format;
