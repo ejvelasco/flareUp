@@ -8,25 +8,60 @@ var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function randomSubset(examples, fraction) {
+  var length = Math.floor(fraction * examples.length);
+  var subset = [];
+  _index2.default.range(length).forEach(function () {
+    var randomIndex = Math.floor(Math.random() * length);
+    subset.push(examples[randomIndex]);
+  });
+  return subset;
+}
+
 function onLoad(data) {
-  var firstRow = data[0];
-  var features = _index2.default.range(firstRow.length);
-  var label = features[features - 1];
-  var examples = _index2.default.format(data, features, label);
-  var options = {
+  data = data.filter(function (row) {
+    return !row.some(function (value) {
+      return value === '?';
+    });
+  });
+  var numberOfColumns = data[0].length;
+  var labels = _index2.default.columns(data, numberOfColumns - 1, numberOfColumns);
+  var features = _index2.default.range(numberOfColumns - 1);
+  var examples = _index2.default.columns(data, numberOfColumns - 1);
+  examples = _index2.default.format(features, examples, labels);
+  var splitOptions = {
     examples: examples,
-    fractionToTrain: 0.8,
-    stratified: true
+    fractionToTrain: 0.8
   };
 
-  var _flareUp$split = _index2.default.split(options),
+  var _flareUp$split = _index2.default.split(splitOptions),
       _flareUp$split2 = _slicedToArray(_flareUp$split, 2),
       trainExamples = _flareUp$split2[0],
       testExamples = _flareUp$split2[1];
 
+  var trainSets = [];
+  _index2.default.range(10).forEach(function () {
+    trainSets.push(randomSubset(examples, .8));
+  });
   var classifier = new _index2.default.tree.DecisionTreeClassifier();
-  // const tree = classifier.fit(trainExamples, )
-  console.log(classifier);
+  var trees = trainSets.map(function (set) {
+    var trainOptions = {
+      features: features,
+      examples: set
+    };
+    var tree = classifier.fit(trainOptions);
+    return tree;
+  });
+  var numRight = 0;
+  testExamples.forEach(function (example) {
+    var predictions = trees.map(function (tree) {
+      return classifier.predict(tree, example);
+    });
+    if (example['label'] === _index2.default.mode(predictions)) {
+      numRight++;
+    }
+  });
+  console.log(numRight / testExamples.length);
 }
 
 _index2.default.load('credit.csv', onLoad);
