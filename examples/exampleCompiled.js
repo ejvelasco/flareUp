@@ -29,21 +29,34 @@ function onLoad(data) {
     });
   });
   var numberOfColumns = data[0].length;
-  var labels = _index2.default.columns(data, numberOfColumns - 1, numberOfColumns);
-  var features = _index2.default.range(0, numberOfColumns - 1);
-  var examples = _index2.default.columns(data, numberOfColumns - 1);
+  var labels = _index2.default.columns(data, 0, 1);
+  var features = _index2.default.range(numberOfColumns - 1);
+  var examples = _index2.default.columns(data, 1, numberOfColumns);
   examples = _index2.default.format(features, examples, labels);
+  var classifier = new _index2.default.tree.DecisionTreeClassifier();
   var splitOptions = {
     examples: examples,
     fractionToTrain: 0.8
   };
-  var classifier = new _index2.default.tree.DecisionTreeClassifier();
+
+  var _flareUp$split3 = _index2.default.split(splitOptions),
+      _flareUp$split4 = _slicedToArray(_flareUp$split3, 2),
+      examplesTrain = _flareUp$split4[0],
+      examplesTest = _flareUp$split4[1];
+
   var trainOptions = {
     features: features,
-    examples: examples
+    examples: examplesTrain,
+    maxDepth: 10
   };
-  var tree = classifier.fit(trainOptions);
-  console.log(JSON.stringify(tree, null, '\t'));
+  classifier.fit(trainOptions);
+  var correct = 0;
+  examplesTest.forEach(function (example) {
+    if (example['label'] === classifier.predict(example)) {
+      correct++;
+    }
+  });
+  console.log(correct / examplesTest.length);
 }
 
-_index2.default.load('iris.csv', onLoad);
+_index2.default.load('mushrooms.csv', onLoad);

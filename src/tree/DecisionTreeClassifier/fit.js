@@ -1,8 +1,7 @@
-import _buildTree from './_buildTree';
+import _decisionTree from './_decisionTree';
 
 function fit(options) {
-  const tree = _buildTree(options);
-  return tree;
+  this.rootNode = _decisionTree(options);
 }
 
 export default fit;

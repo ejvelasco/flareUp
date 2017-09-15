@@ -21,7 +21,6 @@ function _impurityDecrease(options, split) {
 }
 
 function _extraParameters(options, examples) {  
-  options['type'] = 'root';
   options['N'] = examples.length;
   options['depth'] = 1;
   options['impurity'] = gini(examples);
@@ -35,54 +34,64 @@ function _updateParameters(options, examples, depth, nodeType) {
   return options;
 }
 
-function _buildTree(options) {
+function _decisionTree(options) {
   const defaults = {
     examples: [],
     features: [],
     maxDepth: null, 
     maxFeatures: null,   
     minExamplesRequired: 2,
-    minImpurityDecrease: 0.01,
+    minImpurityDecrease: 0,
   };
   options = _setDefaults(options, defaults);
   options = _extraParameters(options, options['examples']);
-  const tree = _build(options);
+  const tree = _treeBuilder(options);
   return tree;
 }
 
-class LeafNode {
-  constructor(label) {
+class _LeafNode {
+  constructor(label, depth) {
     this.type = 'leaf';
     this.label = label;
+    this.depth = depth;
   }
 }
 
-function _build(options) {
-  if (options['examples'] === []) {
-    const votedParentLabel = mode(options['parentLabels']);
-    return new LeafNode(votedParentLabel);
+class _Node {
+  constructor(options) {
+    Object.keys(options).forEach((key) => {
+      this[key] = options[key];
+    });
+  }
+}
+
+function _treeBuilder(options) {
+  const depth = options['depth'];
+  const votedLabelParent = mode(options['parentLabels']);
+  if (depth === options['maxDepth'] || options['examples'] === []) {
+    return new _LeafNode(votedLabelParent, depth);
   }
   const labels = options['examples'].map(example => example['label']);
   const votedLabel = mode(labels);
   if ((options['examples'] < options['minExamplesRequired']) || (gini(options['examples']) === 0)) {
-    return new LeafNode(votedLabel);
+    return new _LeafNode(votedLabel, depth);
   }
   const split = _chooseSplit(options);
   const splitImpurityDecrease = _impurityDecrease(options, split);
   if (splitImpurityDecrease < options['minImpurityDecrease']) {
-    return new LeafNode(majorityVotedLabel);
+    return new _LeafNode(votedLabel, depth);
   }
-  const depth  = options['depth'];
-  const node = {
+  const nodeOptions = {
     depth,
     feature: split['feature'],
-    threshold: split['threshold'],
     gini: gini(options['examples']),
     labelByProbability: _probabilityOfLabels(options['examples'], labels),
-    left: _build(_updateParameters(options, split['left'], depth)),
-    right: _build(_updateParameters(options, split['right'], depth)),
+    left: _treeBuilder(_updateParameters(options, split['left'], depth)),
+    right: _treeBuilder(_updateParameters(options, split['right'], depth)),
+    threshold: split['threshold'],
+    type: (depth === 1) ? 'root' : 'child',
   };
-  return node;
+  return new _Node(nodeOptions);
 }
 
-export default _buildTree;
+export default _decisionTree;

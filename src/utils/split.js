@@ -13,8 +13,8 @@ function setDefaults(options, defaults) {
 function split(options) {
   const defaults = {
     examples: [],
-    fractionToTrain: .8,
-    stratified: true
+    fractionToTrain: 0.8,
+    stratified: true,
   };
   const documentation = 'Please review the flareUp.split docs';
   options = setDefaults(options, defaults);
