@@ -1,16 +1,35 @@
-function _chooseSplit(features, examples, cost) {
+import { range } from '../utils/utils';
+import _cost from './DecisionTreeClassifier/_cost';
+
+function _chooseSplit(options) {
   const splits = [];
+  const maxFeatures = options['maxFeatures'];
+  let features = options['features'];
+  if (maxFeatures) {
+    const featureSubset = [];
+    range(maxFeatures).forEach(() => {
+      const randomIndex = Math.floor(Math.random() * features.length);
+      featureSubset.push(features[randomIndex]);
+    });
+    features = featureSubset;
+  }
   features.forEach((feature) => {
-    const values = examples.map(example => example[feature]);
-    values.forEach((value) => {
-      const left = examples.filter(example => example[feature] <= value);
-      const right = examples.filter(example => example[feature] > value);
+    const values = options['examples'].map(example => example[feature]);
+    const valuesNoDuplicates = [... new Set(values)];
+    const averages = valuesNoDuplicates.map((value, i) => {
+      const nextValue = valuesNoDuplicates[i + 1] || value;
+      const result = (value + nextValue) / 2;
+      return result;
+    });
+    averages.forEach((value) => {
+      const left = options['examples'].filter(example => example[feature] <= value);
+      const right = options['examples'].filter(example => example[feature] > value);
       const split = {
         feature, 
         left,
         right,
         threshold: value,
-        cost: cost(feature, left, right), 
+        cost: _cost(left, right), 
       };
       splits.push(split);
     });

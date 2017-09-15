@@ -1,9 +1,10 @@
 function _probabilityOfLabels(examples, labels) {
   const labelByProbability = {};
-  labels.forEach((label) => {
+  const labelsNoDuplicates = [... new Set(labels)];
+  labelsNoDuplicates.forEach((label) => {
     const filtered = examples.filter(example => example['label'] === label);
-    const probability = (filtered.length / labels.length);
-    labelByProbability[label] = probability.toFixed(4);
+    const probability = (filtered.length / examples.length);
+    labelByProbability[label] = probability;
   });
   return labelByProbability;
   

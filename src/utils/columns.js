@@ -1,4 +1,5 @@
 import range from './range';
+import transpose from './transpose';
 
 function columns(array = [], start = 0, end) {
   if (typeof end === 'undefined') {
@@ -13,7 +14,7 @@ function columns(array = [], start = 0, end) {
   if (result.length === 1) {
     return result[0];
   }
-  return result;
+  return transpose(result);
 }
 
 export default columns;

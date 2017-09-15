@@ -2,6 +2,9 @@ function mode(array = []) {
   if (!array) {
     return null;
   } 
+  if (array.length === 1) {
+    return array[0];
+  }
   const seen = {};
   let indexMode = 1;
   let countMode = 1;

@@ -14,7 +14,7 @@ function split(options) {
   const defaults = {
     examples: [],
     fractionToTrain: .8,
-    stratified: true 
+    stratified: true
   };
   const documentation = 'Please review the flareUp.split docs';
   options = setDefaults(options, defaults);
@@ -45,7 +45,7 @@ function split(options) {
       groupedByLabel[i] = group;
     });
     const testExamples = groupedByLabel.reduce((a, b) => a.concat(b));
-    return [shuffle(trainExamples), shuffle(testExamples)];
+    return [trainExamples, testExamples];
   } else {
     const i = Math.floor(examples.length * fractionToTrain);
     return [examples.slice(0, i), examples.slice(i, examples.length)];

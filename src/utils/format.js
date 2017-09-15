@@ -1,13 +1,12 @@
 import shuffle from './shuffle';
 import columns from './columns';
+import transpose from './transpose';
 
 function categoriesToIntegers(array) {
   const categories = {};
-  let categoryCount = 1;
+  let categoryCount = 0;
   const result = array.map((element) => {
-    if (typeof categories[element] === 'number') {
-      categories[element] = categoryCount;
-    } else {
+    if (typeof categories[element] === 'undefined') {
       categoryCount += 1;
       categories[element] = categoryCount;
     }
@@ -26,36 +25,27 @@ function isCategorical(array) {
   return result;
 }
 
-function transpose(array) {
-  const result = array[0].map((column, i) => array.map(row => row[i]));
-  return result;
-}
-
-function toExample(row, features, label) {
+function toExampleObject(row, i, features, labels) {
   const example = {};
   row.forEach((value, i) => {
     const currentFeature = features[i];
-    if (currentFeature === label) {
-      example['label'] = value; 
-    } else {
-      example[currentFeature] = value;
-    }
+    example[currentFeature] = value;
   });
+  example['label'] = labels[i]; 
   return example;
 }
 
-function format(data, features, label) {
-  const firstRow = data[0];
-  let examples = []; 
+function format(features, examples, labels) {
+  const firstRow = examples[0];
+  let processed = []; 
   firstRow.forEach((element, i) => {
-    const column = columns(data, i, i + 1);
+    const column = columns(examples, i, i + 1);
     const formatted = isCategorical(column) ? categoriesToIntegers(column) : toNumbers(column);
-    examples.push(formatted);
+    processed.push(formatted);
   });
-  examples = transpose(examples);
-  examples = examples.map((row) => toExample(row, features, label));
-  examples = shuffle(examples);
-  return examples;
+  examples = transpose(processed);
+  examples = examples.map((row, i) => toExampleObject(row, i, features, labels));
+  return shuffle(examples);
 }
 
 export default format;

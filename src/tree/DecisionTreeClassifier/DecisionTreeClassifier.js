@@ -1,27 +1,17 @@
-import { format } from '../../utils/utils';
-import predict from './predict';
-import pretty from './pretty';
-import split from './split';
-import toConditionals from './toConditionals';
 import fit from './fit';
+import predict from './predict';
 
 const members = {
   fit,
-  format,
-  pretty,
   predict,
-  split,
-  toConditionals,
 };
 
 class DecisionTreeClassifier {
   constructor() {
-    this.tree = null;
+    Object.keys(members).forEach((key) => {
+      this[key] = members[key];
+    });
   }
 }
-
-Object.keys(members).forEach((key) => {
-  DecisionTreeClassifier[key] = members[key];      
-});
 
 export default DecisionTreeClassifier;

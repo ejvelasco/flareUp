@@ -1,8 +1,8 @@
-const CART = require('./CART');
+import _buildTree from './_buildTree';
 
-function fit(examples, def) {
-	this.tree = CART(examples, def);
-	return this.tree;
+function fit(options) {
+  const tree = _buildTree(options);
+  return tree;
 }
 
-module.exports = fit;
+export default fit;

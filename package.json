@@ -4,9 +4,9 @@
   "description": "The tiny Machine Learning library hoping to grow up and change the world.",
   "main": "/library/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1", 
-    "example": "./node_modules/.bin/babel ./examples/example.js -o ./examples/exampleCompiled.js",
-    "transpile": "./node_modules/.bin/babel src -d lib"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "transpile-example": "./node_modules/.bin/babel ./examples/example.js -o ./examples/exampleCompiled.js",
+    "transpile-flareUp": "./node_modules/.bin/babel src -d lib"
   },
   "author": "Eduardo J. Velasco",
   "license": "MIT",
@@ -27,6 +27,7 @@
     "eslint-plugin-flowtype": "^2.35.1",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.3.0",
-    "eslint-plugin-relay": "0.0.19"
+    "eslint-plugin-relay": "0.0.19",
+    "gulp-run": "^1.7.1"
   }
 }
