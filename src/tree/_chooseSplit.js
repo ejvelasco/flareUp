@@ -1,5 +1,5 @@
 import { range } from '../utils/utils';
-import _cost from './DecisionTreeClassifier/_cost';
+import { _cost } from './DecisionTreeClassifier/_utils';
 
 function _chooseSplit(options) {
   const splits = [];
