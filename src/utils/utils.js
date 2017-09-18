@@ -3,6 +3,7 @@ import format from './format';
 import gini from './gini';
 import isObjectLiteral from './isObjectLiteral';
 import load from './load';
+import mean from './mean';
 import mode from './mode';
 import range from './range';
 import rows from './rows';
@@ -10,6 +11,7 @@ import save from './save';
 import shuffle from './shuffle';
 import split from './split';
 import transpose from './transpose';
+import weightedGini from './weightedGini';
 
 const utils = {
   columns,
@@ -17,6 +19,7 @@ const utils = {
   gini,
   isObjectLiteral,
   load, 
+  mean,
   mode, 
   range, 
   rows, 
@@ -24,6 +27,7 @@ const utils = {
   shuffle, 
   split,
   transpose,
+  weightedGini,
 };
 
 export {
@@ -31,7 +35,8 @@ export {
   format,
   gini,
   isObjectLiteral,
-  load, 
+  load,
+  mean, 
   mode, 
   range, 
   rows, 
@@ -39,6 +44,7 @@ export {
   shuffle, 
   split,
   transpose,
+  weightedGini,
 };
 
 export default utils;

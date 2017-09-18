@@ -1,6 +1,6 @@
-import { gini } from '../../utils/utils';
+import gini from './gini';
 
-function _cost(left, right) {
+function _weightedGini(left, right) {
   const M_L = left.length;
   const M_R = right.length;
   const M = M_L + M_R;
@@ -8,4 +8,4 @@ function _cost(left, right) {
   return result;
 }
 
-export default _cost;
+export default _weightedGini;

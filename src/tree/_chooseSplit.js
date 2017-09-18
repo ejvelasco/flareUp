@@ -1,7 +1,7 @@
 import { range } from '../utils/utils';
-import { _cost } from './DecisionTreeClassifier/_utils';
+import _criteria from './_criteria';
 
-function _chooseSplit(options) {
+function _chooseSplit(options, criterion) {
   const splits = [];
   const maxFeatures = options['maxFeatures'];
   let features = options['features'];
@@ -28,8 +28,9 @@ function _chooseSplit(options) {
         feature, 
         left,
         right,
-        threshold: value,
-        cost: _cost(left, right), 
+        cost: criterion(left, right),
+        criterion: options['criterion'],
+        threshold: value, 
       };
       splits.push(split);
     });
