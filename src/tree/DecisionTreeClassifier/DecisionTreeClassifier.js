@@ -1,4 +1,4 @@
-import { fit, predict } from './utils';
+import { fit, predict } from './members';
 
 const members = {
   fit,

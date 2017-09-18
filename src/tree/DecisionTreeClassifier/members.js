@@ -1,7 +1,7 @@
 import fit from './fit';
 import predict from './predict';
 
-const utils = {
+const members = {
   fit, 
   predict,
 };
@@ -11,4 +11,4 @@ export {
   predict,
 };
 
-export default utils;
+export default members;
