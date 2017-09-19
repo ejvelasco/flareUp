@@ -1,4 +1,3 @@
-import _Node from './_Node';
 import _chooseSplit from './_chooseSplit';
 import _criteria from './_criteria';
 import _extraParameters from './_extraParameters';
@@ -12,7 +11,6 @@ import _updateParameters from './_updateParameters';
 import _voters from './_voters';
 
 export {
-  _Node,
   _chooseSplit,
   _criteria,
   _extraParameters,
