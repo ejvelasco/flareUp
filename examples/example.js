@@ -12,9 +12,9 @@ function randomSubset(examples) {
 function onLoad(data) {
   data = data.filter(row => !row.some((value) => value === '?'));
   const numberOfColumns = data[0].length;
-  const labels = flareUp.columns(data, 0, 1);
+  const labels = flareUp.columns(data, numberOfColumns - 1, numberOfColumns);
   const features = flareUp.range(numberOfColumns - 1);
-  let examples = flareUp.columns(data, 1, numberOfColumns);
+  let examples = flareUp.columns(data, 0, numberOfColumns - 1);
   examples = flareUp.format(features, examples, labels);
   const classifier = new flareUp.tree.DecisionTreeClassifier();
   const splitOptions = {
@@ -25,7 +25,6 @@ function onLoad(data) {
   const trainOptions = {
     features,
     examples: examplesTrain, 
-    maxDepth: 10,
   };
   classifier.fit(trainOptions);
   let correct = 0;
@@ -37,5 +36,5 @@ function onLoad(data) {
   console.log(correct / examplesTest.length);
 }
 
-flareUp.load('mushrooms.csv', onLoad);
+flareUp.load('iris.csv', onLoad);
 

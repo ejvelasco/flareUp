@@ -29,9 +29,9 @@ function onLoad(data) {
     });
   });
   var numberOfColumns = data[0].length;
-  var labels = _index2.default.columns(data, 0, 1);
+  var labels = _index2.default.columns(data, numberOfColumns - 1, numberOfColumns);
   var features = _index2.default.range(numberOfColumns - 1);
-  var examples = _index2.default.columns(data, 1, numberOfColumns);
+  var examples = _index2.default.columns(data, 0, numberOfColumns - 1);
   examples = _index2.default.format(features, examples, labels);
   var classifier = new _index2.default.tree.DecisionTreeClassifier();
   var splitOptions = {
@@ -46,8 +46,7 @@ function onLoad(data) {
 
   var trainOptions = {
     features: features,
-    examples: examplesTrain,
-    maxDepth: 10
+    examples: examplesTrain
   };
   classifier.fit(trainOptions);
   var correct = 0;
@@ -59,4 +58,4 @@ function onLoad(data) {
   console.log(correct / examplesTest.length);
 }
 
-_index2.default.load('mushrooms.csv', onLoad);
+_index2.default.load('iris.csv', onLoad);

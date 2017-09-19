@@ -29,8 +29,8 @@ function _chooseSplit(options, criterion) {
       const split = {
         feature, 
         left,
-        right,
         leftLabels,
+        right,
         rightLabels,
         cost: criterion(leftLabels, rightLabels),
         criterion: options['criterion'],

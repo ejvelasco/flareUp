@@ -1,7 +1,6 @@
 import {
   _setDefaults,
   _criteria,
-  _extraParameters,
   _treeBuilder,
   _voters,
 } from './_utils';

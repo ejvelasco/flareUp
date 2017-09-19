@@ -1,10 +1,9 @@
-import _members from './_members';
+import { _Tree, _treeBuilderWrapper } from '../_utils';
+import _defaults from './_defaults';
 
-class DecisionTreeClassifier {
-  constructor() {
-    Object.keys(_members).forEach((key) => {
-      this[key] = _members[key];
-    });
+class DecisionTreeClassifier extends _Tree {
+  fit(options) {
+    this.rootNode = _treeBuilderWrapper(options, _defaults, 'gini', 'mode');
   }
 }
 
