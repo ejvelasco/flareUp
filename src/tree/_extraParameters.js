@@ -1,6 +1,6 @@
-function _extraParameters(options, examples, impurity) {
+function _extraParameters(options, criterion) {
   options['depth'] = 1;
-  options['impurity'] = impurity(examples);
+  options['criterion'] = criterion(options['examples']);
   return options;
 }
 

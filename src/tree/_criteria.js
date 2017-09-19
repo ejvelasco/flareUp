@@ -1,8 +1,8 @@
-import { weightedGini, MSE } from '../utils/utils';
+import { gini, MSE } from '../utils/utils';
 
 const _criteria = {
+  gini: gini,
   mse: MSE,
-  gini: weightedGini,
 };
 
 export default _criteria;

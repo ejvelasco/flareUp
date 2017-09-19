@@ -6,7 +6,7 @@ import {
   _updateParameters,
 } from './_utils';
 
-function _treeBuilder(options, criterion, impurity, voter) {
+function _treeBuilder(options, criterion, voter) {
   const depth = options['depth'];
   const votedLabelParent = voter(options['parentLabels']);
   const leafNodeOptions = {
@@ -20,11 +20,11 @@ function _treeBuilder(options, criterion, impurity, voter) {
   const labels = options['examples'].map(example => example['label']);
   const votedLabel = voter(labels);
   leafNodeOptions['label'] = votedLabel;
-  if ((options['examples'] < options['minExamplesRequired']) || (impurity(options['examples']) === 0)) {
+  if ((options['examples'] < options['minExamplesRequired']) || (criterion(labels) === 0)) {
     return new _Node(leafNodeOptions);
   }
   const split = _chooseSplit(options, criterion);
-  const splitImpurityDecrease = _impurityDecrease(options, split, impurity);
+  const splitImpurityDecrease = _impurityDecrease(options, split, criterion);
   if (splitImpurityDecrease < options['minImpurityDecrease']) {
     return new _Node(leafNodeOptions);
   }
@@ -34,8 +34,8 @@ function _treeBuilder(options, criterion, impurity, voter) {
     cost: split['cost'],
     criterion: split['criterion'],
     labelByProbability: _probabilityOfLabels(options['examples'], labels),
-    left: _treeBuilder(_updateParameters(options, split['left'], depth), criterion, impurity, voter),
-    right: _treeBuilder(_updateParameters(options, split['right'], depth), criterion, impurity, voter),
+    left: _treeBuilder(_updateParameters(options, split['left'], depth), criterion, voter),
+    right: _treeBuilder(_updateParameters(options, split['right'], depth), criterion, voter),
     threshold: split['threshold'],
     type: (depth === 1) ? 'root' : 'child',
   };

@@ -24,11 +24,15 @@ function _chooseSplit(options, criterion) {
     averages.forEach((value) => {
       const left = options['examples'].filter(example => example[feature] <= value);
       const right = options['examples'].filter(example => example[feature] > value);
+      const leftLabels = left.map(example => example['label']);
+      const rightLabels = right.map(example => example['label']);
       const split = {
         feature, 
         left,
         right,
-        cost: criterion(left, right),
+        leftLabels,
+        rightLabels,
+        cost: criterion(leftLabels, rightLabels),
         criterion: options['criterion'],
         threshold: value, 
       };
