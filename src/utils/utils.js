@@ -11,7 +11,6 @@ import save from './save';
 import shuffle from './shuffle';
 import split from './split';
 import transpose from './transpose';
-import weightedGini from './weightedGini';
 
 const utils = {
   columns,
@@ -27,7 +26,6 @@ const utils = {
   shuffle, 
   split,
   transpose,
-  weightedGini,
 };
 
 export {
@@ -44,7 +42,6 @@ export {
   shuffle, 
   split,
   transpose,
-  weightedGini,
 };
 
 export default utils;

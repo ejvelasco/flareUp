@@ -2,7 +2,6 @@ import _Node from './_Node';
 import _chooseSplit from './_chooseSplit';
 import _criteria from './_criteria';
 import _extraParameters from './_extraParameters';
-import _impurities from './_impurities';
 import _impurityDecrease from './_impurityDecrease';
 import _probabilityOfLabels from './_probabilityOfLabels';
 import _setDefaults from './_setDefaults';
@@ -17,7 +16,6 @@ export {
   _chooseSplit,
   _criteria,
   _extraParameters,
-  _impurities,
   _impurityDecrease,
   _probabilityOfLabels,
   _setDefaults,
