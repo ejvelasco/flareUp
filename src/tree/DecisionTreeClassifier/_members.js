@@ -6,9 +6,4 @@ const members = {
   predict,
 };
 
-export {
-  fit, 
-  predict,
-};
-
 export default members;

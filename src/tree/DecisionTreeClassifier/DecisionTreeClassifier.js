@@ -1,14 +1,9 @@
-import { fit, predict } from './members';
-
-const members = {
-  fit,
-  predict,
-};
+import _members from './_members';
 
 class DecisionTreeClassifier {
   constructor() {
-    Object.keys(members).forEach((key) => {
-      this[key] = members[key];
+    Object.keys(_members).forEach((key) => {
+      this[key] = _members[key];
     });
   }
 }

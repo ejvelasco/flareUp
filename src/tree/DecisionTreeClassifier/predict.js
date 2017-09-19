@@ -1,4 +1,4 @@
-import { _traverseTree } from './_utils';
+import { _traverseTree } from '../_utils';
 
 function predict(example) {
   const rootNode = this['rootNode'];
