@@ -46,7 +46,8 @@ function onLoad(data) {
 
   var trainOptions = {
     features: features,
-    examples: examplesTrain
+    examples: examplesTrain,
+    stratified: true
   };
   classifier.fit(trainOptions);
   var correct = 0;

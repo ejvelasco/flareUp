@@ -24,7 +24,8 @@ function onLoad(data) {
   const [examplesTrain, examplesTest] = flareUp.split(splitOptions);
   const trainOptions = {
     features,
-    examples: examplesTrain, 
+    examples: examplesTrain,
+    stratified: true, 
   };
   classifier.fit(trainOptions);
   let correct = 0;
