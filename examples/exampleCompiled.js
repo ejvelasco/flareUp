@@ -36,7 +36,8 @@ function onLoad(data) {
   var classifier = new _index2.default.tree.DecisionTreeClassifier();
   var splitOptions = {
     examples: examples,
-    fractionToTrain: 0.8
+    fractionToTrain: 0.8,
+    stratified: true
   };
 
   var _flareUp$split3 = _index2.default.split(splitOptions),
@@ -47,7 +48,7 @@ function onLoad(data) {
   var trainOptions = {
     features: features,
     examples: examplesTrain,
-    stratified: true
+    maxDepth: 10,
   };
   classifier.fit(trainOptions);
   var correct = 0;
@@ -59,4 +60,4 @@ function onLoad(data) {
   console.log(correct / examplesTest.length);
 }
 
-_index2.default.load('iris.csv', onLoad);
+_index2.default.load('mushrooms.csv', onLoad);

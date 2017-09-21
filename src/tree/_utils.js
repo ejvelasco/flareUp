@@ -1,4 +1,5 @@
 import _chooseSplit from './_chooseSplit';
+import _chooseSplitMod from './_chooseSplitMod';
 import _criteria from './_criteria';
 import _impurityDecrease from './_impurityDecrease';
 import _probabilityOfLabels from './_probabilityOfLabels';
@@ -12,6 +13,7 @@ import _voters from './_voters';
 
 export {
   _chooseSplit,
+  _chooseSplitMod,
   _criteria,
   _impurityDecrease,
   _probabilityOfLabels,

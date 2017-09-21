@@ -1,10 +1,10 @@
 import { range } from '../utils/utils';
 import _criteria from './_criteria';
 
-function _chooseSplit(options, criterion) {
-  const splits = [];
+function _chooseSplitMod(options, criterion) {
   const maxFeatures = options['maxFeatures'];
   let features = options['features'];
+  let best;
   if (maxFeatures) {
     const featureSubset = [];
     range(maxFeatures).forEach(() => {
@@ -21,7 +21,7 @@ function _chooseSplit(options, criterion) {
       const result = (value + nextValue) / 2;
       return result;
     });
-    valuesNoDuplicates.forEach((value) => {
+    averages.forEach((value) => {
       const left = options['examples'].filter(example => example[feature] <= value);
       const right = options['examples'].filter(example => example[feature] > value);
       const leftLabels = left.map(example => example['label']);
@@ -36,11 +36,12 @@ function _chooseSplit(options, criterion) {
         criterion: options['criterion'],
         threshold: value, 
       };
-      splits.push(split);
+      if (typeof best === 'undefined' || split['cost'] < best['cost']) {
+        best = split;
+      }
     });
   });
-  splits.sort((a, b) => a['cost'] - b['cost']);
-  return splits[0];
+  return best;
 }
 
-export default _chooseSplit;
+export default _chooseSplitMod;

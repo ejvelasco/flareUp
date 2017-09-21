@@ -1,5 +1,5 @@
 import {
-  _chooseSplit,
+  _chooseSplitMod,
   _impurityDecrease,
   _probabilityOfLabels,
   _updateExamples,
@@ -19,26 +19,25 @@ function _treeBuilder(options, criterion, voter) {
     return leaf;
   }
   const labels = options['examples'].map(example => example['label']);
+  const labelsNoDuplicates = [... new Set(labels)];
   const votedLabel = voter(labels);
   leaf['label'] = votedLabel;
-  if ((options['examples'] < options['minExamplesRequired']) || (criterion(labels) === 0)) {
+  if ((options['examples'] < options['minExamplesRequired']) || labelsNoDuplicates.length === 1 ) {
     return leaf;
   }
-  const split = _chooseSplit(options, criterion);
+  const split = _chooseSplitMod(options, criterion);
   const splitImpurityDecrease = _impurityDecrease(options, split, criterion);
-  if (splitImpurityDecrease < options['minImpurityDecrease']) {
+  if (splitImpurityDecrease <= options['minImpurityDecrease']) {
     return leaf;
   }
-  options['depth'] += 1;
   const node = {
     depth,
     feature: split['feature'],
-    cost: split['cost'],
-    criterion: split['criterion'],
-    labelByProbability: _probabilityOfLabels(options['examples'], labels),
-    left: _treeBuilder(_updateExamples(options, split, 'left'), criterion, voter),
-    right: _treeBuilder(_updateExamples(options, split, 'right'), criterion, voter),
     threshold: split['threshold'],
+    criterion: criterion(labels),
+    labelByProbability: _probabilityOfLabels(options['examples'], labels),
+    left: _treeBuilder(_updateExamples(options, split, 'left', depth), criterion, voter),
+    right: _treeBuilder(_updateExamples(options, split, 'right', depth), criterion, voter),
     type: (depth === 1) ? 'root' : 'child',
   };
   return node;

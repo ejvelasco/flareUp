@@ -1,14 +1,6 @@
 import sum from './sum';
 
-function gini(...arrays) {
-  if (arrays.length > 1) {
-    const M_I = arrays.map(array => array.length);
-    const M = sum(M_I);
-    const terms = M_I.map((M_i, i) => (M_i / M) * gini(arrays[i]));
-    const result = sum(terms);
-    return result;
-  }
-  const array = arrays[0];
+function g(array) {
   const arrayNoDuplicates = [... new Set(array)];
   const probabilities = arrayNoDuplicates.map((value) => {
     const elementsWithValue = array.filter(element => element === value);
@@ -17,6 +9,17 @@ function gini(...arrays) {
   }); 
   const probabilitySum = sum(probabilities);
   const result = 1 - probabilitySum;
+  return result;
+}
+
+function gini(left, right) {
+  if (!right) {
+    return g(left);
+  }
+  const M_L = left.length;
+  const M_R = right.length; 
+  const M = M_L + M_R;
+  const result = (M_L / M) * g(left) + (M_R / M) * g(right);
   return result;
 }
 
