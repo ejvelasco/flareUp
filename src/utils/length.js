@@ -2,4 +2,4 @@ function length(array) {
   return array.length;
 }
 
-return length;
+export default length;
