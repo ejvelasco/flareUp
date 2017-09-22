@@ -5,7 +5,7 @@
   "main": "/library/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "transpile-example": "./node_modules/.bin/babel ./examples/example.js -o ./examples/exampleCompiled.js",
+    "transpile-example": "./node_modules/.bin/babel ./examples/example.js -o ./examples/example_transpiled.js",
     "transpile-flareUp": "./node_modules/.bin/babel src -d lib"
   },
   "author": "Eduardo J. Velasco",

@@ -1,13 +1,16 @@
 import sum from './sum';
 
 function g(array) {
+  if (array.length == 0) {
+    return 0;
+  }
   const arrayNoDuplicates = [... new Set(array)];
   const probabilities = arrayNoDuplicates.map((value) => {
     const elementsWithValue = array.filter(element => element === value);
     const probability = (elementsWithValue.length / array.length) ** 2;
     return probability;
   }); 
-  const probabilitySum = sum(probabilities);
+  const probabilitySum = probabilities.reduce((a, b) => a + b);
   const result = 1 - probabilitySum;
   return result;
 }

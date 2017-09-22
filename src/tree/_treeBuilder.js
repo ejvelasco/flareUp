@@ -15,7 +15,6 @@ function _treeBuilder(options, criterion, voter) {
     type: 'leaf',
   };
   if (depth === options['maxDepth'] || options['examples'] === []) {
-    
     return leaf;
   }
   const labels = options['examples'].map(example => example['label']);
