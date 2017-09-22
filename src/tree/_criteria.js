@@ -1,4 +1,4 @@
-import { gini, MSE } from '../utils/utils';
+import { gini, MSE } from '../utils/index';
 
 const _criteria = {
   gini: gini,

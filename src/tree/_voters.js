@@ -1,4 +1,4 @@
-import { mode, mean } from '../utils/utils';
+import { mode, mean } from '../utils/index';
 
 const _voters = {
   mode,

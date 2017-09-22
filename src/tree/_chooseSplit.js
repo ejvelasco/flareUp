@@ -1,4 +1,4 @@
-import { range } from '../utils/utils';
+import { range } from '../utils/index';
 import _criteria from './_criteria';
 
 function _chooseSplit(options, criterion) {

@@ -1,15 +1,18 @@
-import ensemble from './ensemble/ensemble';
-import tree from './tree/tree';
-import preprocessing from './preprocessing'
-import utils from './utils/utils';
+import ensemble from './ensemble/index';
+import preprocessing from './preprocessing/index';
+import tree from './tree/index';
+import utils from './utils/index';
+
 const flareUp = {
   ensemble,
+  preprocessing,
   tree, 
   ...utils,
 }; 
 
 export {
   ensemble,
+  preprocessing,
   tree, 
   utils,
 };
