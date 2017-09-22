@@ -16,7 +16,9 @@ function on_load(data) {
   var X = _index2.default.columns(data, 0, n_features - 1);
   var y = _index2.default.columns(data, n_features - 1, n_features);
   var label_encoder = new _index2.default.preprocessing.LabelEncoder();
-  console.log(label_encoder.fit(y));
+  label_encoder.fit(y);
+  label_encoder.transform(y);
+  console.log(label_encoder.classes);
 }
 
 _index2.default.load('iris.csv', on_load);

@@ -6,7 +6,9 @@ function on_load(data) {
   const X = flareUp.columns(data, 0, n_features - 1);
   const y = flareUp.columns(data, n_features - 1, n_features);
   const label_encoder = new flareUp.preprocessing.LabelEncoder();
-  console.log(label_encoder.fit(y));
+  label_encoder.fit(y);
+  label_encoder.transform(y);
+  console.log(label_encoder.classes);
 }
 
 flareUp.load('iris.csv', on_load);
