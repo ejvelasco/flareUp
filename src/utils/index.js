@@ -1,9 +1,11 @@
 import columns from './columns';
 import difference from './difference';
 import format from './format';
+import for_each from './for_each';
 import gini from './gini';
 import intersection from './intersection';
-import isObjectLiteral from './isObjectLiteral';
+import is_array from './is_array';
+import is_object_literal from './is_object_literal';
 import load from './load';
 import length from './length';
 import mean from './mean';
@@ -20,9 +22,11 @@ const utils = {
   columns,
   difference,
   format,
+  for_each,
   gini,
   intersection,
-  isObjectLiteral,
+  is_array,
+  is_object_literal,
   length,
   load, 
   mean,
@@ -40,14 +44,16 @@ export {
   columns,
   difference,
   format,
+  for_each,
   gini,
   intersection,
-  isObjectLiteral,
-  load,
+  is_array,
+  is_object_literal,
   length,
-  mean, 
-  mode,
-  no_duplicates, 
+  load, 
+  mean,
+  mode, 
+  no_duplicates,
   range, 
   rows, 
   save, 

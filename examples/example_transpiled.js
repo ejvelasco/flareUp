@@ -34,11 +34,10 @@ function on_load(data) {
   var n_features = data_encoded[0].length;
   var X = _index2.default.columns(data_encoded, 0, n_features - 1);
   var y = _index2.default.columns(data_encoded, n_features - 1, n_features);
-  classifier.fit({
+  console.log(classifier.fit({
     X: X,
     y: y
-  });
-  classifier.predict(X);
+  }));
 }
 
 _index2.default.load('iris.csv', on_load);

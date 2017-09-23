@@ -1,13 +1,12 @@
 const _defaults = {
   criterion: 'gini',
-  examples: [],
-  depth: 1,
-  features: [],
-  maxDepth: null, 
-  maxFeatures: null,   
-  minExamplesRequired: 2,
-  minImpurityDecrease: 0,
-  voter: 'mode',  
+  default: 'mode',  
+  max_depth: null, 
+  max_features: null,   
+  min_examples_required: 2,
+  min_impurity_decrease: 0,
+  X: null,
+  y: null,
 };
 
 export default _defaults;
