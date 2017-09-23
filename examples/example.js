@@ -23,8 +23,10 @@ function on_load(data) {
   const n_features = data_encoded[0].length;
   let X = flareUp.columns(data_encoded, 0, n_features - 1);
   let y = flareUp.columns(data_encoded, n_features - 1, n_features);
-  console.log(X)
-  console.log(y)
+  classifier.fit({
+    X,
+    y,
+  });
 }
 
 flareUp.load('iris.csv', on_load);
