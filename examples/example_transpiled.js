@@ -38,6 +38,7 @@ function on_load(data) {
     X: X,
     y: y
   });
+  classifier.predict(X);
 }
 
 _index2.default.load('iris.csv', on_load);

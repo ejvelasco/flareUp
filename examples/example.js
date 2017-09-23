@@ -27,6 +27,7 @@ function on_load(data) {
     X,
     y,
   });
+  classifier.predict(X);
 }
 
 flareUp.load('iris.csv', on_load);
