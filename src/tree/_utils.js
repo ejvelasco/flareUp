@@ -1,4 +1,4 @@
-import _chooseSplit from './_chooseSplit';
+import _choose_split from './_choose_split';
 import _chooseSplitMod from './_chooseSplitMod';
 import _criteria from './_criteria';
 import _impurityDecrease from './_impurityDecrease';
@@ -12,7 +12,7 @@ import _updateExamples from './_updateExamples';
 import _voters from './_voters';
 
 export {
-  _chooseSplit,
+  _choose_split,
   _chooseSplitMod,
   _criteria,
   _impurityDecrease,

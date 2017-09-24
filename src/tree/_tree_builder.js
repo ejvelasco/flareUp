@@ -1,13 +1,34 @@
 import {
-  _chooseSplitMod,
+  _choose_split,
   _impurityDecrease,
   _probabilityOfLabels,
   _updateExamples,
   _updateOptions,
 } from './_utils';
 
+import {
+  no_duplicates,
+  length,
+} from '../utils/index';
+
 function _tree_builder() {
-  
+  const leaf = {
+    depth: this['depth'],
+    label: this['voted_y_parent'],
+    type: 'leaf',
+  };
+  if (this['depth'] === this['max_depth'] || this['X'] === []) {
+    return leaf;
+  }
+  const voted_label = this.voter_fn(this['y']);
+  const labels_no_duplicates = no_duplicates(this['y']);
+  if (this['X'] < this['min_examples_required'] || length(labels_no_duplicates) === 1) {
+    leaf['label'] = voted_label;
+    return leaf;
+  }
+  const split = _choose_split(this);
+  return split;
+  // console.log(split);
   // const depth = options['depth'];
   // const votedLabelParent = voter(options['parentLabels']);
   // const leaf = {

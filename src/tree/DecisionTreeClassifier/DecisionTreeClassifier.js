@@ -11,7 +11,7 @@ class DecisionTreeClassifier extends _BaseTree {
       this[key] = options[key];
     });
     this['root_node'] = _tree_builder.call(this);
-    return this;
+    return this['root_node'];
   }
 }
 

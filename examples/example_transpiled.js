@@ -12,7 +12,7 @@ function isNumbersArray(j) {
   });
 }
 
-function format(X, label_encoder) {
+function encode(X, label_encoder) {
   var first_row = X[0];
   var result = first_row.map(function (values, i) {
     var j = _index2.default.columns(X, i, i + 1);
@@ -30,9 +30,9 @@ function on_load(data) {
       return value === '?';
     });
   });
-  var data_encoded = format(data_non_empty, label_encoder);
+  var data_encoded = encode(data_non_empty, label_encoder);
   var n_features = data_encoded[0].length;
-  var X = _index2.default.columns(data_encoded, 0, n_features - 1);
+  var X = _index2.default.columns(data_encoded, n_features - 1);
   var y = _index2.default.columns(data_encoded, n_features - 1, n_features);
   console.log(classifier.fit({
     X: X,
