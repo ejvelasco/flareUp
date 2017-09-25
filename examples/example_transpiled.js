@@ -8,22 +8,6 @@ var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function isNumbersArray(j) {
-  return j.every(function (element) {
-    return element == Number(element);
-  });
-}
-
-function encode(X, label_encoder) {
-  var first_row = X[0];
-  var result = first_row.map(function (values, i) {
-    var j = _index2.default.columns(X, i, i + 1);
-    var j_processed = isNumbersArray(j) ? j : label_encoder.fit_transform(j);
-    return j_processed;
-  });
-  return _index2.default.transpose(result);
-}
-
 function on_load(data) {
   var label_encoder = new _index2.default.preprocessing.LabelEncoder();
   var classifier = new _index2.default.tree.DecisionTreeClassifier();
@@ -32,7 +16,7 @@ function on_load(data) {
       return value === '?';
     });
   });
-  var data_encoded = encode(data_non_empty, label_encoder);
+  var data_encoded = label_encoder.transform_2d(data_non_empty);
   var data_shuffled = _index2.default.shuffle(data_encoded);
   var n_features = _index2.default.length(data_shuffled[0]);
   var X = _index2.default.columns(data_shuffled, n_features - 1);
@@ -54,6 +38,7 @@ function on_load(data) {
     y: y_train
   });
   var accuracy = classifier.score(X_test, y_test);
+  console.log(accuracy);
 }
 
-_index2.default.load('mushrooms.csv', on_load);
+_index2.default.load('credit.csv', on_load);

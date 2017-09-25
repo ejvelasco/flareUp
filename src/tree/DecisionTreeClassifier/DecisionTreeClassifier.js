@@ -1,17 +1,18 @@
-import { _BaseTree, _tree_builder, _set_defaults } from '../_utils';
-import _defaults from './_defaults';
-import _extra_parameters from './_extra_parameters';
-import { for_each } from '../../utils/index';
+import { each } from '../../utils/index';
+import { DecisionTree, tree_builder, set_defaults } from '../utils';
+import defaults from './defaults';
+import extra_parameters from './extra_parameters';
 
-class DecisionTreeClassifier extends _BaseTree {
+class DecisionTreeClassifier extends DecisionTree {
   fit(options) {
-    options = _set_defaults(options, _defaults);
-    options = _extra_parameters(options);
-    for_each(options, (options, key) => {
-      this[key] = options[key];
+    const classifier = this;
+    options = set_defaults(options, defaults);
+    options = extra_parameters(options);
+    each(options, (options, key) => {
+      classifier[key] = options[key];
     });
-    this['root_node'] = _tree_builder.call(this);
-    return this['root_node'];
+    classifier['root_node'] = tree_builder(classifier);
+    return classifier;
   }
 }
 

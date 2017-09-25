@@ -1,25 +1,10 @@
 import fu from '../lib/index';
 
-
-function isNumbersArray(j) {
-  return j.every(element => element == Number(element));
-}
-
-function encode(X, label_encoder) {
-  const first_row = X[0];
-  const result = first_row.map((values, i) => {
-    const j = fu.columns(X, i, i + 1);
-    const j_processed = isNumbersArray(j) ? j : label_encoder.fit_transform(j);
-    return j_processed; 
-  });
-  return fu.transpose(result);
-}
-
 function on_load(data) {
   const label_encoder = new fu.preprocessing.LabelEncoder();
   const classifier = new fu.tree.DecisionTreeClassifier();
   const data_non_empty = data.filter(row => !row.some((value) => value === '?'));
-  const data_encoded = encode(data_non_empty, label_encoder);
+  const data_encoded = label_encoder.transform_2d(data_non_empty);
   const data_shuffled = fu.shuffle(data_encoded);
   const n_features = fu.length(data_shuffled[0]);
   let X = fu.columns(data_shuffled, n_features - 1);
@@ -34,8 +19,9 @@ function on_load(data) {
     y: y_train, 
   }); 
   const accuracy = classifier.score(X_test, y_test); 
+  console.log(accuracy);
 }
 
-fu.load('mushrooms.csv', on_load);
+fu.load('credit.csv', on_load);
 
     

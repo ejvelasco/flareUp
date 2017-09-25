@@ -1,17 +1,20 @@
 import range from './range';
+import each from './each';
+import length from './length';
 
 function shuffle(array) {
-  let m = array.length;
+  const copy = array.slice();
+  let m = length(copy);
   let t = m;
-  let i = m;
-  range(1, m).forEach(() => {
+  let k = m; 
+  each(range(1, m), () => {
     m -= 1;
-    i = Math.floor(Math.random() * m);
-    t = array[m];
-    array[m] = array[i];
-    array[i] = t;
+    k = Math.floor(Math.random() * m);
+    t = copy[m];
+    copy[m] = copy[k];
+    copy[k] = t;
   });
-  return array;
+  return copy;
 }
 
 export default shuffle;
