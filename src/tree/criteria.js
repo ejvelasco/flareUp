@@ -1,8 +1,8 @@
-import { gini, MSE } from '../utils/index';
+import { weighted_gini, mean_squared_error } from '../utils/index';
 
-const _criteria = {
-  gini: gini,
-  mse: MSE,
+const criteria = {
+  gini: weighted_gini,
+  mse: mean_squared_error,
 };
 
-export default _criteria;
+export default criteria;

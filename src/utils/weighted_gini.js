@@ -1,5 +1,3 @@
-import sum from './sum';
-
 function g(array) {
   if (array.length == 0) {
     return 0;

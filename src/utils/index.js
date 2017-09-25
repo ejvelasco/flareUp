@@ -2,7 +2,6 @@ import columns from './columns';
 import difference from './difference';
 import element_probability from './element_probability';
 import each from './each';
-import gini from './gini';
 import intersection from './intersection';
 import is_array from './is_array';
 import is_numbers_array from './is_numbers_array';
@@ -19,13 +18,14 @@ import shuffle from './shuffle';
 import split_train_test from './split_train_test';
 import sum from './sum';
 import transpose from './transpose';
+import weighted_gini from './weighted_gini';
+
 
 const utils = {
   columns,
   difference,
   each,
   element_probability,
-  gini,
   intersection,
   is_array,
   is_object_literal,
@@ -42,6 +42,7 @@ const utils = {
   split_train_test,
   sum,
   transpose,
+  weighted_gini,
 };
 
 export {
@@ -49,7 +50,6 @@ export {
   difference,
   each,
   element_probability,
-  gini,
   intersection,
   is_array,
   is_object_literal,
@@ -66,6 +66,7 @@ export {
   split_train_test,
   sum,
   transpose,
+  weighted_gini,
 };
 
 export default utils;
