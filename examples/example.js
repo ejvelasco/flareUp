@@ -1,4 +1,4 @@
-import flareUp from '../lib/index';
+import fu from '../lib/index';
 
 
 function isNumbersArray(j) {
@@ -8,27 +8,34 @@ function isNumbersArray(j) {
 function encode(X, label_encoder) {
   const first_row = X[0];
   const result = first_row.map((values, i) => {
-    const j = flareUp.columns(X, i, i + 1);
+    const j = fu.columns(X, i, i + 1);
     const j_processed = isNumbersArray(j) ? j : label_encoder.fit_transform(j);
     return j_processed; 
   });
-  return flareUp.transpose(result);
+  return fu.transpose(result);
 }
 
 function on_load(data) {
-  const label_encoder = new flareUp.preprocessing.LabelEncoder();
-  const classifier = new flareUp.tree.DecisionTreeClassifier();
+  const label_encoder = new fu.preprocessing.LabelEncoder();
+  const classifier = new fu.tree.DecisionTreeClassifier();
   const data_non_empty = data.filter(row => !row.some((value) => value === '?'));
   const data_encoded = encode(data_non_empty, label_encoder);
-  const n_features = data_encoded[0].length;
-  let X = flareUp.columns(data_encoded, n_features - 1);
-  let y = flareUp.columns(data_encoded, n_features - 1, n_features);
-  console.log(classifier.fit({
-    X,
-    y,
-  }));
+  const data_shuffled = fu.shuffle(data_encoded);
+  const n_features = fu.length(data_shuffled[0]);
+  let X = fu.columns(data_shuffled, n_features - 1);
+  let y = fu.columns(data_shuffled, n_features - 1, n_features);
+  const [X_train, X_test, y_train, y_test] = fu.split_train_test({
+    X, 
+    y, 
+    train_size: 0.8,
+  });
+  classifier.fit({ 
+    X: X_train, 
+    y: y_train, 
+  }); 
+  const accuracy = classifier.score(X_test, y_test); 
 }
 
-flareUp.load('iris.csv', on_load);
+fu.load('mushrooms.csv', on_load);
 
     

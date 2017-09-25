@@ -1,5 +1,7 @@
 'use strict';
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _index = require('../lib/index');
 
 var _index2 = _interopRequireDefault(_index);
@@ -31,13 +33,27 @@ function on_load(data) {
     });
   });
   var data_encoded = encode(data_non_empty, label_encoder);
-  var n_features = data_encoded[0].length;
-  var X = _index2.default.columns(data_encoded, n_features - 1);
-  var y = _index2.default.columns(data_encoded, n_features - 1, n_features);
-  console.log(classifier.fit({
+  var data_shuffled = _index2.default.shuffle(data_encoded);
+  var n_features = _index2.default.length(data_shuffled[0]);
+  var X = _index2.default.columns(data_shuffled, n_features - 1);
+  var y = _index2.default.columns(data_shuffled, n_features - 1, n_features);
+
+  var _fu$split_train_test = _index2.default.split_train_test({
     X: X,
-    y: y
-  }));
+    y: y,
+    train_size: 0.8
+  }),
+      _fu$split_train_test2 = _slicedToArray(_fu$split_train_test, 4),
+      X_train = _fu$split_train_test2[0],
+      X_test = _fu$split_train_test2[1],
+      y_train = _fu$split_train_test2[2],
+      y_test = _fu$split_train_test2[3];
+
+  classifier.fit({
+    X: X_train,
+    y: y_train
+  });
+  var accuracy = classifier.score(X_test, y_test);
 }
 
-_index2.default.load('iris.csv', on_load);
+_index2.default.load('mushrooms.csv', on_load);
