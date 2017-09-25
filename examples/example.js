@@ -4,7 +4,7 @@ function on_load(data) {
   const label_encoder = new fu.preprocessing.LabelEncoder();
   const classifier = new fu.tree.DecisionTreeClassifier();
   const data_non_empty = data.filter(row => !row.some((value) => value === '?'));
-  const data_encoded = label_encoder.transform_2d(data_non_empty);
+  const data_encoded = label_encoder.fit_transform_matrix(data_non_empty);
   const data_shuffled = fu.shuffle(data_encoded);
   const n_features = fu.length(data_shuffled[0]);
   let X = fu.columns(data_shuffled, n_features - 1);

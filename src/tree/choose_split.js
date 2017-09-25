@@ -35,7 +35,7 @@ function _choose_split(classifier) {
   let best_split = null;
   const X_subset = (max_features === null) ? classifier['X'] : _random_subset(classifier['X'], max_features);
   const first_row = X_subset[0];
-  each(first_row, (first_row_value, j) => {
+  each(first_row, (value, j) => {
     const jth_column = columns(X_subset, j, j + 1);
     const jth_values = no_duplicates(jth_column);
     each(jth_values, (jth_values, k) => { 
@@ -44,9 +44,7 @@ function _choose_split(classifier) {
       const y_left = [];
       const X_right = [];
       const y_right = [];
-      //implement pair wise averages
-      each(jth_column, (jth_column, i) => {
-        const current_value = jth_column[i]; 
+      each(jth_column, (current_value, i) => {
         const current_label = classifier['y'][i];
         if (current_value <= threshold) {
           X_left.push(X_subset[i]);

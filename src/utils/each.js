@@ -14,7 +14,7 @@ function each(structure, fn) {
       if (typeof structure === 'undefined') {
         fn(key);  
       } else {
-        fn(structure[key], key);        
+        fn(key, structure[key]);        
       }
     });
   }

@@ -21,7 +21,16 @@ class LabelEncoder {
     this['y'] = no_duplicates(y);
     return this.transform(y);
   }
-  transform_1d(y) {
+  fit_transform_matrix(X) {
+    const row = X[0];
+    const result = row.map((values, i) => {
+      const column = columns(X, i, i + 1);
+      const column_encoded = is_numbers_array(column) ? column : this.fit_transform(column);
+      return column_encoded; 
+    });
+    return transpose(result);
+  }
+  transform(y) {
     const y_past = this['y'];
     const y_current = no_duplicates(y);
     const documentation = 'Please review the documentation for flareUp.preprocessing.LabelEncoder';
@@ -37,15 +46,7 @@ class LabelEncoder {
     const result = y.map((label) => y_current_map[label]);
     return result;
   }
-  transform_2d(X) {
-    const row = X[0];
-    const result = row.map((values, i) => {
-      const column = columns(X, i, i + 1);
-      const column_encoded = is_numbers_array(column) ? column : this.fit_transform(column);
-      return column_encoded; 
-    });
-    return transpose(result);
-  }
+  
 }
 
 export default LabelEncoder;

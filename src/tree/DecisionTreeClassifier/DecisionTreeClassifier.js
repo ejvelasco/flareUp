@@ -8,8 +8,8 @@ class DecisionTreeClassifier extends DecisionTree {
     const classifier = this;
     options = set_defaults(options, defaults);
     options = extra_parameters(options);
-    each(options, (options, key) => {
-      classifier[key] = options[key];
+    each(options, (key, value) => {
+      classifier[key] = value;
     });
     classifier['root_node'] = tree_builder(classifier);
     return classifier;
