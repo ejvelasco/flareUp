@@ -1,6 +1,5 @@
 function no_duplicates(array) {
-  const result = [... new Set(array)];
-  return result;
+  return [... new Set(array)];
 }
 
 export default no_duplicates;

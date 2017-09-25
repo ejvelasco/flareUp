@@ -1,6 +1,6 @@
 import mean from './mean';
 
-function MSE(examples) {
+function mean_squared_error(examples) {
   const labels = examples.map(example => example['label']);
   const predictedValue = mean(labels);
   const errors = labels.map(label => predictedValue - label);
@@ -9,4 +9,4 @@ function MSE(examples) {
   return result;
 }
 
-export default MSE;
+export default mean_squared_error;

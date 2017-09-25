@@ -1,6 +1,5 @@
 function isInteger(number) {
-  const result = number === Math.floor(number);
-  return result;
+  return number === Math.floor(number);
 }
 
 function range(start, end, step) {

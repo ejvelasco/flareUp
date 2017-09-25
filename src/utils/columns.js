@@ -1,3 +1,5 @@
+import each from './each';
+import length from './length';
 import range from './range';
 import transpose from './transpose';
 
@@ -7,11 +9,11 @@ function columns(array = [], start = 0, end) {
     start = 0;
   }
   const result = [];
-  range(start, end).forEach((i) => {
-    const column = array.map(row => row[i]);
+  each(range(start, end), (value) => {
+    const column = array.map(row => row[value]);
     result.push(column);
   });
-  if (result.length === 1) {
+  if (length(result) === 1) {
     return result[0];
   }
   return transpose(result);
