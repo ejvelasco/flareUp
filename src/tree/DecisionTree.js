@@ -1,10 +1,9 @@
-import { length, sum } from './../utils/index';
+import { each, length, sum } from './../utils/index';
 import { traverse_tree } from './utils';
 
 class DecisionTree {
   predict(X) {
-    const root_node = this['root_node'];
-    return X.map(sample =>  traverse_tree(root_node, sample));
+    return X.map(sample =>  traverse_tree(this['root_node'], sample));
   }
   score(X, y) {
     const y_predicted = this.predict(X);
@@ -14,6 +13,11 @@ class DecisionTree {
       return result ? 1 : 0;
     }); 
     return sum(scores) / length(y);
+  }
+  set_up(options) {
+    each(options, (key, value) => {
+      this[key] = value;
+    });
   }
 }
 

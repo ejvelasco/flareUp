@@ -1,6 +1,6 @@
 import { length } from '../utils/index';
 
-function _impurity_decrease(classifier, split) {
+function impurity_decrease(classifier, split) {
   const N_C_R = length(split['y_right']);
   const N_C_L = length(split['y_left']);
   const N_C = N_C_R + N_C_L;
@@ -13,4 +13,4 @@ function _impurity_decrease(classifier, split) {
   return  coefficient * (criterion_y - term_right - term_left);
 }
 
-export default _impurity_decrease;
+export default impurity_decrease;

@@ -5,7 +5,7 @@ function tree_builder(classifier) {
   const depth = classifier['depth'];
   const leaf = {
     depth,
-    label: classifier['voted_y_parent'],
+    label: classifier['y_parent_default'],
     type: 'leaf',
   };
   if (classifier['depth'] === classifier['max_depth'] || classifier['X'] === []) {

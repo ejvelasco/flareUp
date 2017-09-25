@@ -1,10 +1,10 @@
 import { each } from '../utils/index';
 
-function _set_defaults(options, _defaults) {
+function set_defaults(options, defaults) {
   each(options, (key, value) => {
-    _defaults[key] = value;
+    defaults[key] = value;
   });
-  return _defaults;
+  return defaults;
 }
 
-export default _set_defaults;
+export default set_defaults;

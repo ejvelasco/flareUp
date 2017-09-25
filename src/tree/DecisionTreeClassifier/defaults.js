@@ -1,6 +1,5 @@
 const _defaults = {
-  criterion: 'gini',
-  default: 'mode',  
+  criterion: 'gini',  
   max_depth: null, 
   max_features: null,   
   min_examples_required: 2,

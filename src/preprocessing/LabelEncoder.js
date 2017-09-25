@@ -46,7 +46,6 @@ class LabelEncoder {
     const result = y.map((label) => y_current_map[label]);
     return result;
   }
-  
 }
 
 export default LabelEncoder;

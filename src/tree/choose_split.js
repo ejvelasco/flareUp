@@ -11,7 +11,7 @@ function random_index(array) {
   return Math.floor(Math.random() * length(array));
 }
 
-function _random_subset(X, max_features) {
+function random_subset(X, max_features) {
   const subset = [];
   const x_0 = X[0];
   const indices_used = new Set();
@@ -30,10 +30,10 @@ function _random_subset(X, max_features) {
   return transpose(subset);
 }
 
-function _choose_split(classifier) {
+function choose_split(classifier) {
   const max_features = classifier['max_features'];
   let best_split = null;
-  const X_subset = (max_features === null) ? classifier['X'] : _random_subset(classifier['X'], max_features);
+  const X_subset = (max_features === null) ? classifier['X'] : random_subset(classifier['X'], max_features);
   const row = X_subset[0];
   each(row, (value, j) => {
     const column = columns(X_subset, j, j + 1);
@@ -71,4 +71,4 @@ function _choose_split(classifier) {
   return best_split;
 }
 
-export default _choose_split;
+export default choose_split;
