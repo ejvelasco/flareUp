@@ -16,7 +16,7 @@ function on_load(data) {
       return value === '?';
     });
   });
-  var data_encoded = label_encoder.transform_2d(data_non_empty);
+  var data_encoded = label_encoder.fit_transform_matrix(data_non_empty);
   var data_shuffled = _index2.default.shuffle(data_encoded);
   var n_features = _index2.default.length(data_shuffled[0]);
   var X = _index2.default.columns(data_shuffled, n_features - 1);

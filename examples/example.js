@@ -9,6 +9,8 @@ function on_load(data) {
   const n_features = fu.length(data_shuffled[0]);
   let X = fu.columns(data_shuffled, n_features - 1);
   let y = fu.columns(data_shuffled, n_features - 1, n_features);
+
+
   const [X_train, X_test, y_train, y_test] = fu.split_train_test({
     X, 
     y, 
