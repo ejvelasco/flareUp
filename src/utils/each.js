@@ -6,7 +6,7 @@ function each(structure, fn) {
       if (typeof structure === 'undefined') {
         fn(i);  
       } else {
-        fn(structure, i);        
+        fn(structure[i], i);        
       }
     });
   } else if (is_object_literal(structure)) {
@@ -14,7 +14,7 @@ function each(structure, fn) {
       if (typeof structure === 'undefined') {
         fn(key);  
       } else {
-        fn(structure, key);        
+        fn(structure[key], key);        
       }
     });
   }

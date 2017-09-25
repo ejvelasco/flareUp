@@ -1,6 +1,7 @@
 import { 
-  columns,
+  columns, 
   difference,
+  each,
   intersection,
   is_numbers_array,
   length, 
@@ -10,35 +11,38 @@ import {
 
 class LabelEncoder {
   contructor() {
-    this['labels'] = null;
+    this['y'] = null;
   }
-  fit(j) {
-    this['labels'] = no_duplicates(j);
+  fit(y) {
+    this['y'] = no_duplicates(y);
     return this;
   }
-  fit_transform(j) {
-    this['labels'] = no_duplicates(j);
-    return this.transform(j);
+  fit_transform(y) {
+    this['y'] = no_duplicates(y);
+    return this.transform(y);
   }
-  transform(j) {
-    const labels = this['labels'];
-    const current_labels = no_duplicates(j);
-    const tip = 'Please review the documentation for flareUp.preprocessing.LabelEncoder';
-    if (length(intersection(current_labels, labels)) < length(labels)) {
-      const labels_difference = difference(labels, current_labels).join(', ');
-      const message = `j contains new labels: ${labels_difference}. ${tip}`;
+  transform_1d(y) {
+    const y_past = this['y'];
+    const y_current = no_duplicates(y);
+    const documentation = 'Please review the documentation for flareUp.preprocessing.LabelEncoder';
+    if (length(intersection(y_current, y_past)) < length(y_past)) {
+      const y_difference = difference(y_past, y_current);
+      const message = `Array contains new labels: ${y_difference}. ${documentation}`;
       throw new Error(message);
     }
-    const result = j.map((label) => labels.indexOf(label));
+    const y_current_map = {};
+    each(y_current, (label, i) => {
+      y_current_map[label] = i;
+    });
+    const result = y.map((label) => y_current_map[label]);
     return result;
   }
   transform_2d(X) {
-    const label_encoder = this;
-    const first_row = X[0];
-    const result = first_row.map((values, i) => {
-      const j = columns(X, i, i + 1);
-      const j_processed = is_numbers_array(j) ? j : label_encoder.fit_transform(j);
-      return j_processed; 
+    const row = X[0];
+    const result = row.map((values, i) => {
+      const column = columns(X, i, i + 1);
+      const column_encoded = is_numbers_array(column) ? column : this.fit_transform(column);
+      return column_encoded; 
     });
     return transpose(result);
   }
