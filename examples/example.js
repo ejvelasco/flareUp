@@ -7,10 +7,8 @@ function on_load(data) {
   const data_encoded = label_encoder.fit_transform_matrix(data_non_empty);
   const data_shuffled = fu.shuffle(data_encoded);
   const n_features = fu.length(data_shuffled[0]);
-  let X = fu.columns(data_shuffled, n_features - 1);
-  let y = fu.columns(data_shuffled, n_features - 1, n_features);
-
-
+  const X = fu.columns(data_shuffled, n_features - 1);
+  const y = fu.columns(data_shuffled, n_features - 1, n_features);
   const [X_train, X_test, y_train, y_test] = fu.split_train_test({
     X, 
     y, 
